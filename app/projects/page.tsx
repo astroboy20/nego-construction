@@ -1,0 +1,6 @@
+'use client'
+import { useState } from 'react'
+import { Filter } from 'lucide-react'
+import { PageHero, ProjectCard, SiteShell, CtaBand } from '@/components/site'
+import { projects } from '@/lib/site-data'
+export default function ProjectsPage() { const [filter, setFilter] = useState('All'); const types = ['All', ...Array.from(new Set(projects.map((project) => project.type)))]; const shown = filter === 'All' ? projects : projects.filter((project) => project.type === filter); return <SiteShell><main><PageHero eyebrow="Our work" title="Proof in the places we have built." description="Browse selected infrastructure, residential and commercial work delivered with care across Nigeria."/><section className="container py-16"><div className="mb-10 flex flex-wrap items-center gap-3" aria-label="Filter projects"><Filter className="mr-2 text-accent" />{types.map((type) => <button key={type} onClick={() => setFilter(type)} className={`border px-4 py-2 text-xs font-bold uppercase tracking-[.1em] ${filter === type ? 'border-primary bg-primary text-primary-foreground' : 'border-border hover:border-primary'}`}>{type}</button>)}</div><div className="grid gap-10 md:grid-cols-2">{shown.map((project) => <ProjectCard key={project.slug} project={project} />)}</div></section></main><CtaBand /></SiteShell> }

@@ -1,0 +1,5 @@
+import { ArrowUpRight } from 'lucide-react'
+import Link from 'next/link'
+import { CtaBand, PageHero, SiteShell } from '@/components/site'
+import { services } from '@/lib/site-data'
+export default function ServicesPage() { return <SiteShell><main><PageHero eyebrow="Capabilities" title="The right people for the whole build." description="We bring the technical depth, commercial discipline and delivery experience needed to turn an ambitious brief into a dependable result."/><section className="container grid gap-px bg-border py-24 md:grid-cols-2">{services.map((service, index) => <article key={service.title} className="bg-background p-8 md:p-12"><p className="font-mono text-sm text-accent">0{index + 1}</p><h2 className="mt-16 text-3xl font-black">{service.title}</h2><p className="mt-5 max-w-md leading-7 text-muted-foreground">{service.text}</p><Link href="/contact" className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.1em]">Discuss a project <ArrowUpRight /></Link></article>)}</section></main><CtaBand /></SiteShell> }

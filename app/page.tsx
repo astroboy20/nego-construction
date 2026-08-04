@@ -1,47 +1,13 @@
-export default function Page() {
-  return (
-    <main
-      style={{
-        colorScheme: 'light dark',
-        position: 'relative',
-        display: 'flex',
-        minHeight: '100vh',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'light-dark(#fff, #000)',
-        color: 'light-dark(#000, #fff)',
-      }}
-    >
-      <svg
-        aria-hidden="true"
-        style={{ width: 80, height: 80 }}
-        width={80}
-        height={80}
-        fill="none"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-        stroke="currentColor"
-        strokeWidth="0.5"
-      >
-        <path
-          d="M14.2 14.2H17V6.9375C17 4.76288 15.2371 3 13.0625 3H5.8V5.8M14.2 14.2V7.79063L7.79062 14.2H14.2ZM14.2 14.2V17H6.9375C4.76288 17 3 15.2371 3 13.0625V5.8H5.8M5.8 5.8V12.2313L12.2313 5.8H5.8Z"
-          strokeLinejoin="round"
-        />
-      </svg>
-      <p
-        style={{
-          position: 'absolute',
-          left: '50%',
-          top: 'calc(50% + 56px)',
-          transform: 'translateX(-50%)',
-          whiteSpace: 'nowrap',
-          fontSize: '14px',
-          fontWeight: 500,
-          color: 'light-dark(#71717a, #a1a1aa)',
-        }}
-      >
-        Your v0 generation will show here.
-      </p>
-    </main>
-  )
-}
+import Link from 'next/link'
+import { ArrowDown, ArrowUpRight, Check } from 'lucide-react'
+import { CtaBand, MediaSlot, ProjectCard, SectionHeading, SiteShell, Testimonials, VideoPrompt } from '@/components/site'
+import { projects, services } from '@/lib/site-data'
+
+export default function Page() { return <SiteShell><VideoPrompt /><main>
+  <section className="border-b border-border"><div className="container grid min-h-[calc(100vh-5rem)] items-end gap-12 py-16 md:grid-cols-[1.2fr_0.8fr] md:py-24"><div><p className="eyebrow text-accent">Construction · Engineering · Delivery</p><h1 className="mt-6 max-w-5xl text-balance text-6xl font-black leading-[0.92] tracking-[-0.08em] md:text-8xl">We build the places <span className="text-accent">progress</span> calls home.</h1><p className="mt-8 max-w-xl text-lg leading-8 text-muted-foreground">NEGO Construction partners with ambitious clients to deliver infrastructure, residential and commercial projects with clarity, care and craft.</p><div className="mt-10 flex flex-wrap gap-4"><Link href="/projects" className="button-primary">Explore our work <ArrowUpRight data-icon="inline-end" /></Link><Link href="/about" className="button-outline">Why NEGO <ArrowDown data-icon="inline-end" /></Link></div></div><div className="md:pb-2"><MediaSlot label="Hero media slot · supplied project image pending" tall /><div className="mt-4 flex justify-between text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground"><span>Lagos · Nigeria</span><span>01 / 04</span></div></div></div></section>
+  <section className="py-24"><div className="container grid gap-12 md:grid-cols-[0.8fr_1.2fr] md:gap-24"><div><p className="eyebrow text-accent">A better way to build</p><h2 className="mt-4 text-4xl font-black tracking-[-0.05em] md:text-5xl">Experience that makes complexity feel simple.</h2></div><div><p className="text-xl leading-8">We bring engineering rigour and human attention to every stage of the project. That means fewer surprises, stronger decisions and a finished result made to last.</p><div className="mt-10 grid gap-6 border-t border-border pt-7 sm:grid-cols-3"><div><p className="text-4xl font-black text-accent">01</p><p className="mt-2 text-sm font-bold">Clear thinking</p></div><div><p className="text-4xl font-black text-accent">02</p><p className="mt-2 text-sm font-bold">Accountable delivery</p></div><div><p className="text-4xl font-black text-accent">03</p><p className="mt-2 text-sm font-bold">Built for tomorrow</p></div></div></div></div></section>
+  <section className="bg-primary py-24 text-primary-foreground"><div className="container"><SectionHeading eyebrow="What we do" title="From first sketch to final handover." description="A multidisciplinary team for projects that need one clear direction."/><div className="grid gap-px overflow-hidden border border-primary-foreground/15 bg-primary-foreground/15 md:grid-cols-4">{services.map((service, index) => <div key={service.title} className="bg-primary p-7"><p className="font-mono text-sm text-accent">0{index + 1}</p><h3 className="mt-14 text-xl font-bold">{service.title}</h3><p className="mt-4 text-sm leading-6 text-primary-foreground/65">{service.text}</p></div>)}</div></div></section>
+  <section className="py-24"><div className="container"><div className="flex flex-col justify-between gap-6 md:flex-row md:items-end"><SectionHeading eyebrow="Selected work" title="Projects that move people forward." description="A glimpse into the roads, spaces and places we have helped bring to life."/><Link href="/projects" className="button-outline mb-10 shrink-0">View all projects <ArrowUpRight data-icon="inline-end" /></Link></div><div className="grid gap-10 md:grid-cols-2">{projects.slice(0, 4).map((project) => <ProjectCard key={project.slug} project={project} />)}</div></div></section>
+  <Testimonials />
+  <section className="py-24"><div className="container grid items-center gap-12 md:grid-cols-2"><div><p className="eyebrow text-accent">The Lily Park story</p><h2 className="mt-4 text-4xl font-black tracking-[-0.05em] md:text-6xl">A new address for a new chapter.</h2><p className="mt-6 max-w-lg leading-7 text-muted-foreground">Discover the vision, process and progress behind Lily Park, a residential project created with the everyday experience in mind.</p><Link href="/projects/lily-park" className="button-dark mt-8">View project <ArrowUpRight data-icon="inline-end" /></Link></div><MediaSlot label="Lily Park project media slot" tall /></div></section>
+</main><CtaBand /></SiteShell> }
