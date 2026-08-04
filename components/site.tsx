@@ -10,7 +10,7 @@ export function Logo() { return <Link href="/" className="font-mono text-lg font
 
 export function Header() {
   const path = usePathname(); const [open, setOpen] = useState(false)
-  const links = [['About', '/about'], ['Services', '/services'], ['Projects', '/projects'], ['Portfolio', '/portfolio'], ['Contact', '/contact']]
+  const links = [['About', '/about'], ['Services', '/services'], ['Projects', '/projects'], ['Portfolio', '/portfolio'], ['Team', '/team'], ['Contact', '/contact']]
   return <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
     <div className="container flex h-20 items-center justify-between"><Logo />
       <nav className="hidden items-center gap-7 md:flex" aria-label="Main navigation">{links.map(([label, href]) => <Link key={href} href={href} className={`text-xs font-bold uppercase tracking-[0.12em] transition-colors hover:text-accent ${path === href ? 'text-accent' : 'text-foreground'}`}>{label}</Link>)}</nav>
