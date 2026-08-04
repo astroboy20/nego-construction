@@ -2,12 +2,13 @@
 @import 'tw-animate-css';
 
 @theme inline {
-  --color-background: var(--background); --color-foreground: var(--foreground); --color-card: var(--card); --color-card-foreground: var(--card-foreground); --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground); --color-secondary: var(--secondary); --color-secondary-foreground: var(--secondary-foreground); --color-muted: var(--muted); --color-muted-foreground: var(--muted-foreground); --color-accent: var(--accent); --color-accent-foreground: var(--accent-foreground); --color-border: var(--border); --color-input: var(--input); --color-ring: var(--ring); --radius-sm: calc(var(--radius) * .65); --radius-md: calc(var(--radius) * .8); --radius-lg: var(--radius); --font-sans: 'Arial', sans-serif; --font-mono: 'Courier New', monospace;
+  --color-background: var(--background); --color-foreground: var(--foreground); --color-card: var(--card); --color-card-foreground: var(--card-foreground); --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground); --color-secondary: var(--secondary); --color-secondary-foreground: var(--secondary-foreground); --color-muted: var(--muted); --color-muted-foreground: var(--muted-foreground); --color-accent: var(--accent); --color-accent-foreground: var(--accent-foreground); --color-border: var(--border); --color-input: var(--input); --color-ring: var(--ring); --radius-sm: calc(var(--radius) * .65); --radius-md: calc(var(--radius) * .8); --radius-lg: var(--radius); --font-sans: var(--font-inter); --font-display: var(--font-space-grotesk); --font-mono: var(--font-space-grotesk);
 }
 :root { color-scheme: light; --background: #ffffff; --foreground: #111412; --card: #ffffff; --card-foreground: #111412; --primary: #004b22; --primary-foreground: #ffffff; --secondary: #e2e4e2; --secondary-foreground: #111412; --muted: #f2f4f2; --muted-foreground: #5e665f; --accent: #60c300; --accent-foreground: #071006; --border: #dfe4df; --input: #dfe4df; --ring: #60c300; --radius: .15rem; }
 * { border-color: var(--border); }
 html { scroll-behavior: smooth; }
 body { @apply bg-background text-foreground font-sans; }
+h1, h2, h3, h4, .button-primary, .button-dark, .button-outline { @apply font-display; }
 .container { width: min(100% - 2.5rem, 1180px); margin-inline: auto; }
 .eyebrow { @apply font-mono text-[11px] font-bold uppercase tracking-[.18em]; }
 .button-primary, .button-dark, .button-outline { @apply inline-flex items-center justify-center gap-3 px-5 py-3 text-xs font-bold uppercase tracking-[.1em] transition-all; }
