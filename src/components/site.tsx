@@ -31,7 +31,7 @@ export function Logo() {
   return (
     <Link href="/" className="inline-flex items-center">
       <Image
-        src="/new nego logo.png"
+        src="/logo.png"
         alt="NEGO Construction"
         width={120}
         height={40}
@@ -209,7 +209,7 @@ export function Header() {
             <DrawerHeader className="border-b border-primary-foreground/15 p-6 text-left">
               <DrawerTitle className="font-display text-2xl text-primary-foreground">
                 <Image
-                  src="/new nego logo.png"
+                  src="/logo.png"
                   alt="NEGO Construction"
                   width={100}
                   height={34}
