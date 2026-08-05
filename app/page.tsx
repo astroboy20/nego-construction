@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
-import { CtaBand, MediaSlot, ProjectCard, Reveal, SectionHeading, SiteShell, Testimonials } from '@/components/site'
+import { CtaBand, MediaSlot, ProjectCard, Reveal, SectionHeading, SiteShell, Testimonials, VideoPrompt } from '@/components/site'
 import { projects, services } from '@/lib/site-data'
 
 export default function Page() {
-  return <SiteShell><main>
+  return <SiteShell><VideoPrompt /><main>
     <section className="hero-section border-b border-border">
       <div className="container grid min-h-[calc(100svh-4rem)] items-center gap-10 py-12 sm:py-16 md:grid-cols-[1.1fr_.9fr] md:gap-14 md:py-20">
         <Reveal className="hero-copy">
