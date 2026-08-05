@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -28,11 +29,15 @@ import { projects, services, testimonials } from "@/lib/site-data";
 
 export function Logo() {
   return (
-    <Link
-      href="/"
-      className="font-mono text-lg font-bold tracking-[0.2em] text-primary"
-    >
-      NEGO<span className="text-accent">.</span>
+    <Link href="/" className="inline-flex items-center">
+      <Image
+        src="/new nego logo.png"
+        alt="NEGO Construction"
+        width={120}
+        height={40}
+        className="h-10 w-auto object-contain"
+        priority
+      />
     </Link>
   );
 }
@@ -203,7 +208,13 @@ export function Header() {
           <DrawerContent className="w-[min(88vw,22rem)] bg-primary text-primary-foreground">
             <DrawerHeader className="border-b border-primary-foreground/15 p-6 text-left">
               <DrawerTitle className="font-display text-2xl text-primary-foreground">
-                NEGO<span className="text-accent">.</span>
+                <Image
+                  src="/new nego logo.png"
+                  alt="NEGO Construction"
+                  width={100}
+                  height={34}
+                  className="h-8 w-auto object-contain brightness-0 invert"
+                />
               </DrawerTitle>
               <DrawerDescription className="text-left text-primary-foreground/60">
                 Construction and engineering, delivered with clarity.
