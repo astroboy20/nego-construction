@@ -194,3 +194,17 @@ h4,
   background: var(--accent);
   color: var(--accent-foreground);
 }
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 30s) linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}

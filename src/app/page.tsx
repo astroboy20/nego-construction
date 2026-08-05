@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import {
   CtaBand,
+  ClientsMarquee,
   MediaSlot,
   ProjectCard,
   Reveal,
@@ -141,6 +142,8 @@ export default function Page() {
         </section>
 
         <Testimonials />
+
+        <ClientsMarquee />
 
         <section className="overflow-hidden py-16 sm:py-24">
           <div className="container grid items-center gap-10 md:grid-cols-2 md:gap-12">

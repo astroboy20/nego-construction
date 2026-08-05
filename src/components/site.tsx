@@ -336,7 +336,7 @@ export function MediaSlot({
         <span className="font-mono text-5xl font-bold text-primary/10">
           NEGO
         </span>
-        <span className="absolute bottom-5 left-5 max-w-[14rem] text-xs font-bold uppercase tracking-[0.12em] text-primary/50">
+        <span className="absolute bottom-5 left-5 max-w-56 text-xs font-bold uppercase tracking-[0.12em] text-primary/50">
           {label}
         </span>
       </div>
@@ -382,7 +382,7 @@ export function SectionHeading({
   return (
     <Reveal className="mb-10 max-w-2xl">
       <p className="eyebrow text-accent">{eyebrow}</p>
-      <h2 className="mt-4 text-balance text-4xl font-black tracking-[-0.05em] md:text-5xl">
+      <h2 className="mt-4 text-balance text-4xl font-black tracking-tighter md:text-5xl">
         {title}
       </h2>
       {description && (
@@ -400,7 +400,7 @@ export function ProjectCard({
   return (
     <Reveal>
       <Link href={`/projects/${project.slug}`} className="group block">
-        <div className="media-slot aspect-[4/3] min-h-0">
+        <div className="media-slot aspect-4/3 min-h-0">
           <span className="font-mono text-6xl font-bold text-primary/10">
             {project.accent}
           </span>
@@ -537,7 +537,7 @@ export function CtaBand() {
         <div className="container flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <div>
             <p className="eyebrow">Have a project in mind?</p>
-            <h2 className="mt-4 max-w-2xl text-4xl font-black tracking-[-0.05em] md:text-5xl">
+            <h2 className="mt-4 max-w-2xl text-4xl font-black tracking-tighter md:text-5xl">
               Let&apos;s build what matters.
             </h2>
           </div>
@@ -558,5 +558,93 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       {children}
       <Footer />
     </>
+  );
+}
+
+// ─── Clients Marquee ─────────────────────────────────────────────────────────
+
+const clients = [
+  { name: "Central Bank of Nigeria",        src: "/marquee/cbn.png" },
+  { name: "Lagos State Government",         src: "/marquee/lagos-state-government.png" },
+  { name: "Deux Projects",                  src: "/marquee/deux-projects.png" },
+  { name: "LSDPC",                          src: "/marquee/lsdpc.jpg" },
+  { name: "TETFund",                        src: "/marquee/tetfund.jpg" },
+  { name: "ARM",                            src: "/marquee/arm.jpg" },
+  { name: "Ministry of Works",              src: "/marquee/ministry-of-works.jpg" },
+  { name: "MCC",                            src: "/marquee/mcc.jpg" },
+  { name: "University of Ife",              src: "/marquee/university-of-ife.jpg" },
+  { name: "Akwa Ibom State University",     src: "/marquee/akwa-ibom-university.jpg" },
+  { name: "Polytechnic Ibadan",             src: "/marquee/polytechnic-ibadan.jpg" },
+  { name: "Anetor Plus",                    src: "/marquee/anetor-plus.jpg" },
+  { name: "Soul-Mate",                      src: "/marquee/soul-mate.png" },
+  { name: "StarAgri",                       src: "/marquee/star-agri.png" },
+];
+
+export function ClientsMarquee() {
+  // Duplicate the list so the loop is seamless
+  const track = [...clients, ...clients];
+
+  return (
+    <section className="border-y border-border py-14 sm:py-20 overflow-hidden">
+      <div className="container mb-10 sm:mb-12">
+        <Reveal>
+          <p className="eyebrow text-accent">Trusted by</p>
+          <h2 className="mt-3 max-w-2xl text-balance text-4xl font-black tracking-tighter sm:text-5xl">
+            Brands that have built with us.
+          </h2>
+        </Reveal>
+      </div>
+
+      {/* Marquee track — pure CSS animation, no JS, respects reduced-motion */}
+      <div
+        className="relative flex overflow-hidden"
+        aria-label="Client logos"
+        role="list"
+      >
+        {/* Fade edges */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-linear-to-r from-background to-transparent sm:w-32" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-linear-to-l from-background to-transparent sm:w-32" />
+
+        <ul
+          className="flex min-w-full shrink-0 animate-marquee items-center gap-10 sm:gap-14"
+          style={{ "--marquee-duration": "38s" } as React.CSSProperties}
+        >
+          {track.map((client, i) => (
+            <li
+              key={`${client.name}-${i}`}
+              role="listitem"
+              className="flex shrink-0 items-center justify-center"
+            >
+              <Image
+                src={client.src}
+                alt={client.name}
+                width={140}
+                height={60}
+                className="h-10 w-auto max-w-30 object-contain transition-opacity duration-300 hover:opacity-80 sm:h-12 sm:max-w-35"
+              />
+            </li>
+          ))}
+        </ul>
+
+        {/* Second copy for seamless loop */}
+        <ul
+          aria-hidden="true"
+          className="flex min-w-full shrink-0 animate-marquee items-center gap-10 sm:gap-14"
+          style={{ "--marquee-duration": "38s" } as React.CSSProperties}
+        >
+          {track.map((client, i) => (
+            <li key={`dup-${client.name}-${i}`} className="flex shrink-0 items-center justify-center">
+              <Image
+                src={client.src}
+                alt=""
+                width={140}
+                height={60}
+                className="h-10 w-auto max-w-30 object-contain sm:h-12 sm:max-w-35"
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
