@@ -1,69 +1,168 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import {
+  CtaBand,
+  MediaSlot,
+  ProjectCard,
+  Reveal,
+  SectionHeading,
+  SiteShell,
+  Testimonials,
+  VideoPrompt,
+} from "@/components/site";
+import { projects, services } from "@/lib/site-data";
 
-export default function Home() {
+export default function Page() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+    <SiteShell>
+      <VideoPrompt />
+      <main>
+        <section className="hero-section border-b border-border">
+          <div className="container grid min-h-[calc(100svh-4rem)] items-center gap-10 py-12 sm:py-16 md:grid-cols-[1.1fr_.9fr] md:gap-14 md:py-20">
+            <Reveal className="hero-copy">
+              <p className="eyebrow text-accent">
+                Construction · Engineering · Delivery
+              </p>
+              <h1 className="mt-5 max-w-5xl text-balance text-[3.35rem] font-black leading-[.9] tracking-[-0.08em] sm:text-6xl md:text-8xl">
+                We build the places{" "}
+                <span className="text-accent">progress</span> calls home.
+              </h1>
+              <p className="mt-7 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+                NEGO Construction partners with ambitious clients to deliver
+                infrastructure, residential and commercial projects with
+                clarity, care and craft.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+                <Link href="/projects" className="button-primary">
+                  Explore our work <ArrowUpRight data-icon="inline-end" />
+                </Link>
+                <Link href="/about" className="button-outline">
+                  Why NEGO <ArrowDown data-icon="inline-end" />
+                </Link>
+              </div>
+            </Reveal>
+            <Reveal className="hero-media" delay={120}>
+              <MediaSlot
+                label="Hero media slot · supplied project image pending"
+                tall
+              />
+              <div className="mt-3 flex justify-between text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground sm:text-xs">
+                <span>Lagos · Nigeria</span>
+                <span>01 / 04</span>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-24">
+          <Reveal>
+            <div className="container grid gap-10 md:grid-cols-[.75fr_1.25fr] md:gap-24">
+              <div>
+                <p className="eyebrow text-accent">A better way to build</p>
+                <h2 className="mt-4 text-4xl font-black tracking-[-0.05em] sm:text-5xl">
+                  Experience that makes complexity feel simple.
+                </h2>
+              </div>
+              <div>
+                <p className="text-lg leading-8 sm:text-xl">
+                  We bring engineering rigour and human attention to every stage
+                  of the project. That means fewer surprises, stronger decisions
+                  and a finished result made to last.
+                </p>
+                <div className="mt-8 grid gap-5 border-t border-border pt-6 sm:mt-10 sm:grid-cols-3 sm:gap-6 sm:pt-7">
+                  {[
+                    ["01", "Clear thinking"],
+                    ["02", "Accountable delivery"],
+                    ["03", "Built for tomorrow"],
+                  ].map(([number, label], index) => (
+                    <Reveal key={number} delay={index * 80}>
+                      <div>
+                        <p className="text-4xl font-black text-accent">
+                          {number}
+                        </p>
+                        <p className="mt-2 text-sm font-bold">{label}</p>
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+
+        <section className="bg-primary py-16 text-primary-foreground sm:py-24">
+          <div className="container">
+            <SectionHeading
+              eyebrow="What we do"
+              title="From first sketch to final handover."
+              description="A multidisciplinary team for projects that need one clear direction."
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+            <div className="grid gap-px overflow-hidden border border-primary-foreground/15 bg-primary-foreground/15 sm:grid-cols-2 md:grid-cols-4">
+              {services.map((service, index) => (
+                <Reveal key={service.title} delay={index * 70}>
+                  <div className="h-full bg-primary p-6 sm:p-7">
+                    <p className="font-mono text-sm text-accent">
+                      0{index + 1}
+                    </p>
+                    <h3 className="mt-10 text-xl font-bold sm:mt-14">
+                      {service.title}
+                    </h3>
+                    <p className="mt-4 text-sm leading-6 text-primary-foreground/65">
+                      {service.text}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-24">
+          <div className="container">
+            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+              <SectionHeading
+                eyebrow="Selected work"
+                title="Projects that move people forward."
+                description="A glimpse into the roads, spaces and places we have helped bring to life."
+              />
+              <Link
+                href="/projects"
+                className="button-outline mb-8 shrink-0 md:mb-10"
+              >
+                View all projects <ArrowUpRight data-icon="inline-end" />
+              </Link>
+            </div>
+            <div className="grid gap-8 sm:gap-10 md:grid-cols-2">
+              {projects.slice(0, 4).map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <Testimonials />
+
+        <section className="overflow-hidden py-16 sm:py-24">
+          <div className="container grid items-center gap-10 md:grid-cols-2 md:gap-12">
+            <Reveal>
+              <p className="eyebrow text-accent">The Lily Park story</p>
+              <h2 className="mt-4 text-4xl font-black tracking-[-0.05em] sm:text-5xl md:text-6xl">
+                A new address for a new chapter.
+              </h2>
+              <p className="mt-5 max-w-lg leading-7 text-muted-foreground">
+                Discover the vision, process and progress behind Lily Park, a
+                residential project created with the everyday experience in
+                mind.
+              </p>
+              <Link href="/projects/lily-park" className="button-dark mt-7">
+                View project <ArrowUpRight data-icon="inline-end" />
+              </Link>
+            </Reveal>
+            <MediaSlot label="Lily Park project media slot" tall />
+          </div>
+        </section>
       </main>
-    </div>
+      <CtaBand />
+    </SiteShell>
   );
 }
