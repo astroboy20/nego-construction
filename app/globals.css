@@ -7,11 +7,19 @@
 :root { color-scheme: light; --background: #ffffff; --foreground: #111412; --card: #ffffff; --card-foreground: #111412; --primary: #004b22; --primary-foreground: #ffffff; --secondary: #e2e4e2; --secondary-foreground: #111412; --muted: #f2f4f2; --muted-foreground: #5e665f; --accent: #60c300; --accent-foreground: #071006; --border: #dfe4df; --input: #dfe4df; --ring: #60c300; --radius: .15rem; }
 * { border-color: var(--border); }
 html { scroll-behavior: smooth; }
-body { @apply bg-background text-foreground font-sans; }
+body { @apply bg-background text-foreground font-sans; overflow-x: hidden; }
 h1, h2, h3, h4, .button-primary, .button-dark, .button-outline { @apply font-display; }
-.container { width: min(100% - 2.5rem, 1180px); margin-inline: auto; }
+.container { width: min(100% - 2rem, 1180px); margin-inline: auto; }
 .eyebrow { @apply font-mono text-[11px] font-bold uppercase tracking-[.18em]; }
-.button-primary, .button-dark, .button-outline { @apply inline-flex items-center justify-center gap-3 px-5 py-3 text-xs font-bold uppercase tracking-[.1em] transition-all; }
+.button-primary, .button-dark, .button-outline { @apply inline-flex min-h-11 items-center justify-center gap-3 px-5 py-3 text-xs font-bold uppercase tracking-[.1em] transition-[background-color,color,border-color,transform] duration-300; }
+.button-primary:active, .button-dark:active, .button-outline:active { transform: translateY(1px); }
+.reveal-pending { opacity: 0; transform: translate3d(0, 1.5rem, 0); }
+.reveal-visible { opacity: 1; transform: translate3d(0, 0, 0); transition: opacity 700ms cubic-bezier(.22,1,.36,1) var(--reveal-delay), transform 700ms cubic-bezier(.22,1,.36,1) var(--reveal-delay); }
+@media (min-width: 640px) { .container { width: min(100% - 3rem, 1180px); } }
+@media (min-width: 768px) { .reveal-pending { transform: translate3d(0, 2rem, 0); } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } .reveal-pending { opacity: 1; transform: none; } }
+.eyebrow { @apply font-mono text-[11px] font-bold uppercase tracking-[.18em]; }
+.button-primary, .button-dark, .button-outline { @apply inline-flex min-h-11 items-center justify-center gap-3 px-5 py-3 text-xs font-bold uppercase tracking-[.1em] transition-all; }
 .button-primary { @apply bg-accent text-accent-foreground hover:bg-primary hover:text-primary-foreground; }
 .button-dark { @apply bg-primary text-primary-foreground hover:bg-foreground; }
 .button-outline { @apply border border-foreground bg-transparent text-foreground hover:bg-foreground hover:text-background; }
