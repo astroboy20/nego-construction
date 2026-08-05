@@ -173,7 +173,7 @@ export default function AboutPage() {
           />
           <div className="flex flex-col justify-center">
             <p className="eyebrow text-accent">Responsible delivery</p>
-            <h2 className="mt-4 text-4xl font-black tracking-[-.05em]">
+            <h2 className="mt-4 text-4xl font-black tracking-tighter">
               We build for the people who use what we make.
             </h2>
             <p className="mt-6 leading-7 text-muted-foreground">
