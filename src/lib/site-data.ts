@@ -42,9 +42,34 @@ export const testimonials = [
 ]
 
 export const team = [
-  { name: 'Engr. Banjo Adedeji', role: 'Managing Director', credentials: 'B.Sc. Civil Engineering', bio: 'He has diverse 24 years experience in road construction and high-rise building management. Having worked briefly with S.N.C Lawalin, he brings his wide experience to bear on all projects.' },
-  { name: 'Arc. Ajibade Adedayo Adeyemo', role: 'Senior Projects Manager', credentials: 'B.Sc., M.Sc. Architecture, ARCON', bio: 'He has over 25 years experience in construction and site management, with vast experience as a consultant engineer.' },
-  { name: 'Engr. David Adedoyin', role: 'Project Manager', credentials: 'B.Sc. Mechanical Engineering, MNSE, Registered Member (COREN)', bio: 'He has over 19 years experience in construction and site management, with vast experience as a consultant engineer.' },
-  { name: 'Mr. Abisola Somorin', role: 'Head of Quantity Surveying', credentials: 'B.Sc. Quantity Surveying, MBA, R.I.C.S, P.M.P, RQS, MNIQS', bio: 'He has 14 years construction experience and contract management, and is a good tracker of projects from conception to completion.' },
-  { name: 'Eng. Salawu Wakeel Taiwo', role: 'Site Engineer', credentials: 'B.Sc. MBA Engineering, COREN', bio: 'He has over 19 years experience in construction and site management, as well as extensive experience as a consultant builder.' },
+  {
+    name: 'Adebanjo Adedeji',
+    role: 'Founder & Managing Director',
+    credentials: 'B.Sc. Civil Engineering',
+    bio: 'I have had the privilege of leading and managing Nego Construction Limited for the past 25 years. What began as a vision has grown into a thriving company, built from the ground up alongside an exceptional team of dedicated employees and strengthened by the trust and support of the clients, partners, and friends we have gained along the way. I founded Nego Construction with a clear purpose: to create a company that improves lives through quality construction while providing meaningful opportunities for the people who make our work possible. We have always believed that every project is more than just a building — it is an opportunity to deliver lasting value, build strong relationships, and contribute to the growth of our communities.',
+  },
+  {
+    name: 'Kofoworola Adedeji',
+    role: 'Director',
+    credentials: '',
+    bio: 'Serving as a Director of Nego Construction Limited has been one of the greatest privileges of my professional journey. For the past 25 years, I have had the opportunity to help guide the growth of a company that was built on hard work, integrity, and a commitment to excellence. At Nego Construction Limited, we believe that our responsibility extends beyond constructing buildings. We are committed to creating value for our clients, providing opportunities for our employees, and delivering projects that stand as a testament to quality, innovation, and reliability.',
+  },
+  {
+    name: 'Oyinshi Theresa',
+    role: 'Accountant',
+    credentials: '',
+    bio: 'As the Accountant at Nego Construction Limited, I have been responsible for overseeing the company\'s financial operations for the past two years. My role involves managing financial records, preparing budgets and reports, monitoring project expenditures, and ensuring compliance with financial regulations and industry standards. By maintaining sound financial practices, I support informed decision-making and contribute to the company\'s continued growth and stability.',
+  },
+  {
+    name: 'Peter Akpan',
+    role: 'Lead Project Engineer',
+    credentials: '',
+    bio: 'As a Project Engineer at Nego Construction Limited, I help ensure that every project is executed efficiently, safely, and to the highest standards. My responsibilities include project planning, coordinating engineering activities, monitoring construction progress, ensuring compliance with technical specifications, and supporting the timely completion of projects within budget. I remain dedicated to innovation, teamwork, and delivering engineering solutions that exceed client expectations.',
+  },
+  {
+    name: 'Robert Edouk',
+    role: 'Inventory Manager',
+    credentials: '',
+    bio: 'As the Inventory Manager at Nego Construction Limited, I am responsible for ensuring that materials, equipment, and supplies are efficiently managed to support the successful delivery of every project. My role includes overseeing stock levels, coordinating procurement, monitoring the movement of materials, and ensuring that resources are available when and where they are needed. By implementing organised inventory systems and maintaining accurate records, I contribute to minimising waste, optimising costs, and improving project efficiency.',
+  },
 ]

@@ -10,9 +10,14 @@ import {
   Check,
   ChevronRight,
   Globe,
+  Instagram,
+  Linkedin,
   Mail,
   Menu,
+  Pause,
   Play,
+  Volume2,
+  VolumeX,
   X,
 } from "lucide-react";
 import {
@@ -51,7 +56,7 @@ const navLinks = [
   ["Contact", "/contact"],
 ] as const;
 
-export function Reveal({
+export function Reveal({ 
   children,
   className = "",
   delay = 0,
@@ -278,36 +283,30 @@ export function Footer() {
           <div className="mt-5 flex flex-wrap gap-3">
             <a
               className="social"
-              href="#social-placeholder"
-              aria-label="LinkedIn placeholder"
+              href="https://www.instagram.com/nego_construction?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="NEGO Construction on Instagram"
             >
-              <AtSign />
+              <Instagram />
             </a>
             <a
               className="social"
-              href="#social-placeholder"
-              aria-label="YouTube placeholder"
+              href="https://www.linkedin.com/company/nego-construction-limited/?viewAsMember=true"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="NEGO Construction on LinkedIn"
             >
-              <Play />
+              <Linkedin />
             </a>
             <a
               className="social"
-              href="#social-placeholder"
-              aria-label="Facebook placeholder"
-            >
-              <Globe />
-            </a>
-            <a
-              className="social"
-              href="mailto:hello@nego.example"
-              aria-label="Email NEGO"
+              href="mailto:negoconstruction@yahoo.com"
+              aria-label="Email NEGO Construction"
             >
               <Mail />
             </a>
           </div>
-          <p className="mt-4 text-xs text-primary-foreground/50">
-            Social profile links will be added when supplied.
-          </p>
         </div>
       </div>
       <div className="border-t border-primary-foreground/10 py-6 text-center text-xs text-primary-foreground/45">
@@ -464,6 +463,10 @@ export function Testimonials() {
 
 export function VideoPrompt() {
   const [open, setOpen] = useState(true);
+  const [muted, setMuted] = useState(true);
+  const [playing, setPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
@@ -476,6 +479,26 @@ export function VideoPrompt() {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  const toggleMute = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setMuted(v.muted);
+  };
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      v.play();
+      setPlaying(true);
+    } else {
+      v.pause();
+      setPlaying(false);
+    }
+  };
+
   if (!open) return null;
   return (
     <div
@@ -506,12 +529,45 @@ export function VideoPrompt() {
             <X />
           </button>
         </div>
-        <div className="relative mt-6 flex aspect-video items-center justify-center border border-border bg-muted">
-          <Play className="text-accent" size={48} aria-hidden="true" />
-          <span className="absolute bottom-3 left-3 max-w-[75%] text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground sm:bottom-4 sm:left-4 sm:text-xs">
-            Video asset slot · supplied media pending
-          </span>
+
+        {/* Video */}
+        <div className="relative mt-6 aspect-video overflow-hidden border border-border bg-muted">
+          <video
+            ref={videoRef}
+            src="/lily-project.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="h-full w-full object-cover"
+          />
+          {/* Controls bottom-right */}
+          <div className="absolute bottom-3 right-3 flex gap-2 sm:bottom-4 sm:right-4">
+            <button
+              onClick={togglePlay}
+              aria-label={playing ? "Pause video" : "Play video"}
+              className="inline-flex size-9 items-center justify-center bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/80"
+            >
+              {playing ? (
+                <Pause size={16} aria-hidden="true" />
+              ) : (
+                <Play size={16} aria-hidden="true" />
+              )}
+            </button>
+            <button
+              onClick={toggleMute}
+              aria-label={muted ? "Unmute video" : "Mute video"}
+              className="inline-flex size-9 items-center justify-center bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/80"
+            >
+              {muted ? (
+                <VolumeX size={16} aria-hidden="true" />
+              ) : (
+                <Volume2 size={16} aria-hidden="true" />
+              )}
+            </button>
+          </div>
         </div>
+
         <div className="mt-6 flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
           <p className="max-w-lg text-sm leading-6 text-muted-foreground">
             A new NEGO project is taking shape. Explore the thinking behind the

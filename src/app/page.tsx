@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import {
   CtaBand,
@@ -153,15 +154,36 @@ export default function Page() {
                 A new address for a new chapter.
               </h2>
               <p className="mt-5 max-w-lg leading-7 text-muted-foreground">
-                Discover the vision, process and progress behind Lily Park, a
-                residential project created with the everyday experience in
-                mind.
+                An estate developed and constructed by NEGO Construction in
+                Abijo GRA — where wellness, peace and community come together
+                less than 20 minutes from Victoria Island.
               </p>
               <Link href="/projects/lily-park" className="button-dark mt-7">
                 View project <ArrowUpRight data-icon="inline-end" />
               </Link>
             </Reveal>
-            <MediaSlot label="Lily Park project media slot" tall />
+            {/* Clickable image — links to the dedicated project page */}
+            <Reveal delay={100}>
+              <Link
+                href="/projects/lily-park"
+                className="group relative block overflow-hidden"
+                aria-label="View Lily Park project"
+              >
+                <Image
+                  src="/lily-project-big-image.jpg"
+                  alt="Lily Park estate, Abijo GRA, Lagos"
+                  width={700}
+                  height={520}
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  priority={false}
+                />
+                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-white">
+                    View project <ArrowUpRight size={16} />
+                  </span>
+                </div>
+              </Link>
+            </Reveal>
           </div>
         </section>
       </main>
