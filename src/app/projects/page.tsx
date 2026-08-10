@@ -2,14 +2,16 @@
 import { useState } from "react";
 import { ArrowUpRight, Filter } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   CtaBand,
   MediaSlot,
   PageHero,
+  Reveal,
   SectionHeading,
   SiteShell,
 } from "@/components/site";
-import { projects } from "@/lib/site-data";
+import { projects, allProjects } from "@/lib/site-data";
 
 export default function ProjectsPage() {
   const [filter, setFilter] = useState("All");
@@ -62,10 +64,26 @@ export default function ProjectsPage() {
                 key={project.slug}
                 className="grid gap-8 md:grid-cols-[1.35fr_.65fr] md:items-center"
               >
-                <MediaSlot
-                  label={`${project.name} project image slot · supplied image pending`}
-                  tall={index % 2 === 0}
-                />
+                <div className="relative aspect-[4/3] overflow-hidden border border-border bg-muted">
+                  <Image
+                    src={
+                      project.slug === 'lily-park'
+                        ? '/lily-project-big-image.jpg'
+                        : project.slug === 'alpha-court'
+                        ? '/alpha-court-1.jpg'
+                        : project.slug === 'imo-hills-farm'
+                        ? '/imo-hills-1.jpeg'
+                        : project.slug === 'abacha-road'
+                        ? '/abacha-1.jpeg'
+                        : project.slug === 'eku-baptist-hospital'
+                        ? '/eku-bamptist-hospital-1.jpeg'
+                        : '/comprehesive-healthcenter-1.jpeg'
+                    }
+                    alt={project.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 <div className="flex flex-col gap-5">
                   <p className="eyebrow text-accent">
                     {project.status} · {project.type}
@@ -105,6 +123,48 @@ export default function ProjectsPage() {
                 </div>
               </article>
             ))}
+          </div>
+        </section>
+
+        {/* Complete portfolio section */}
+        <section className="border-t border-border bg-muted py-16 sm:py-24">
+          <div className="container">
+            <Reveal>
+              <p className="eyebrow text-accent">Complete portfolio</p>
+              <h2 className="mt-4 text-4xl font-black tracking-[-0.05em] sm:text-5xl">
+                26 projects delivered across Nigeria.
+              </h2>
+              <p className="mt-5 max-w-2xl leading-7 text-muted-foreground">
+                Over 25 years, NEGO has delivered infrastructure, healthcare,
+                educational, commercial, residential, and agricultural projects
+                for government agencies, private clients, and development
+                partners across Nigeria.
+              </p>
+            </Reveal>
+
+            <div className="mt-12 overflow-hidden border border-border bg-background">
+              {allProjects.map((project, index) => (
+                <div
+                  key={`${project.name}-${index}`}
+                  className="grid grid-cols-[auto_1fr_1fr] gap-6 border-b border-border px-6 py-5 last:border-b-0 sm:px-8 sm:py-6"
+                >
+                  <span className="text-xs font-bold uppercase tracking-widest text-accent">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <div>
+                    <h3 className="font-bold leading-snug">
+                      {project.name}
+                    </h3>
+                    <p className="mt-1 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      {project.type}
+                    </p>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {project.client}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       </main>

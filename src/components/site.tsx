@@ -51,7 +51,6 @@ const navLinks = [
   ["About", "/about"],
   ["Services", "/services"],
   ["Projects", "/projects"],
-  ["Portfolio", "/portfolio"],
   ["Team", "/team"],
   ["Contact", "/contact"],
 ] as const;
@@ -391,21 +390,43 @@ export function SectionHeading({
   );
 }
 
+// Map project slugs to their first image
+const projectImages: Record<string, string> = {
+  'lily-park': '/lily-project-big-image.jpg',
+  'alpha-court': '/alpha-court-1.jpg',
+  'imo-hills-farm': '/imo-hills-1.jpeg',
+  'abacha-road': '/abacha-1.jpeg',
+  'eku-baptist-hospital': '/eku-bamptist-hospital-1.jpeg',
+  'comprehensive-healthcare-centre': '/comprehesive-healthcenter-1.jpeg',
+};
+
 export function ProjectCard({
   project,
 }: {
   project: (typeof projects)[number];
 }) {
+  const imageSrc = projectImages[project.slug];
+
   return (
     <Reveal>
       <Link href={`/projects/${project.slug}`} className="group block">
-        <div className="media-slot aspect-4/3 min-h-0">
-          <span className="font-mono text-6xl font-bold text-primary/10">
-            {project.accent}
-          </span>
-          <span className="absolute bottom-4 left-4 text-xs font-bold uppercase tracking-[0.12em] text-primary/50">
-            Asset slot · {project.name}
-          </span>
+        <div className="relative aspect-4/3 overflow-hidden border border-border bg-muted">
+          {imageSrc ? (
+            <Image
+              src={imageSrc}
+              alt={project.name}
+              width={700}
+              height={525}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <span className="font-mono text-6xl font-bold text-primary/10">
+                {project.accent}
+              </span>
+            </div>
+          )}
         </div>
         <div className="flex items-start justify-between gap-5 border-b border-border py-5">
           <div>
