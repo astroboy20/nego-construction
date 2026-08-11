@@ -638,7 +638,67 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-// ─── Clients Marquee ─────────────────────────────────────────────────────────
+// ─── Hero Slideshow ───────────────────────────────────────────────────────────
+
+const heroSlides = [
+  { src: "/hero-1.png", alt: "NEGO Construction — project site 01" },
+  { src: "/hero-2.png", alt: "NEGO Construction — project site 02" },
+];
+
+export function HeroSlideshow() {
+  const [current, setCurrent] = useState(0);
+  const [prev, setPrev] = useState<number | null>(null);
+  const total = heroSlides.length;
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+    const id = setInterval(() => {
+      setPrev(current);
+      setCurrent((c) => (c + 1) % total);
+    }, 5000);
+    return () => clearInterval(id);
+  }, [current, total]);
+
+  return (
+    <div className="relative aspect-4/3 w-full overflow-hidden border border-border bg-muted">
+      {heroSlides.map((slide, i) => (
+        <div
+          key={slide.src}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            i === current
+              ? "opacity-100"
+              : i === prev
+              ? "opacity-0"
+              : "opacity-0"
+          }`}
+          aria-hidden={i !== current}
+        >
+          <Image
+            src={slide.src}
+            alt={slide.alt}
+            fill
+            className="object-cover"
+            priority={i === 0}
+          />
+        </div>
+      ))}
+      {/* Slide indicators */}
+      <div className="absolute bottom-4 right-4 flex gap-2">
+        {heroSlides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => { setPrev(current); setCurrent(i); }}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`h-1.5 transition-all duration-300 ${
+              i === current ? "w-6 bg-accent" : "w-1.5 bg-white/50"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 const clients = [
   { name: "Central Bank of Nigeria",        src: "/marquee/cbn.png" },

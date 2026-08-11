@@ -4,7 +4,7 @@ import { ArrowDown, ArrowUpRight } from "lucide-react";
 import {
   CtaBand,
   ClientsMarquee,
-  MediaSlot,
+  HeroSlideshow,
   ProjectCard,
   Reveal,
   SectionHeading,
@@ -44,13 +44,10 @@ export default function Page() {
               </div>
             </Reveal>
             <Reveal className="hero-media" delay={120}>
-              <MediaSlot
-                label="Hero media slot · supplied project image pending"
-                tall
-              />
+              <HeroSlideshow />
               <div className="mt-3 flex justify-between text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground sm:text-xs">
                 <span>Lagos · Nigeria</span>
-                <span>01 / 04</span>
+                <span>01 / 02</span>
               </div>
             </Reveal>
           </div>
@@ -61,7 +58,7 @@ export default function Page() {
             <div className="container grid gap-10 md:grid-cols-[.75fr_1.25fr] md:gap-24">
               <div>
                 <p className="eyebrow text-accent">A better way to build</p>
-                <h2 className="mt-4 text-4xl font-black tracking-[-0.05em] sm:text-5xl">
+                <h2 className="mt-4 text-4xl font-black tracking-tighter sm:text-5xl">
                   Experience that makes complexity feel simple.
                 </h2>
               </div>
@@ -150,7 +147,7 @@ export default function Page() {
           <div className="container grid items-center gap-10 md:grid-cols-2 md:gap-12">
             <Reveal>
               <p className="eyebrow text-accent">The Lily Park story</p>
-              <h2 className="mt-4 text-4xl font-black tracking-[-0.05em] sm:text-5xl md:text-6xl">
+              <h2 className="mt-4 text-4xl font-black tracking-tighter sm:text-5xl md:text-6xl">
                 A new address for a new chapter.
               </h2>
               <p className="mt-5 max-w-lg leading-7 text-muted-foreground">
@@ -174,12 +171,12 @@ export default function Page() {
                   alt="Lily Park estate, Abijo GRA, Lagos"
                   width={700}
                   height={520}
-                  className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="aspect-4/3 w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   priority={false}
                   placeholder="blur"
                   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                 />
-                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <div className="absolute inset-0 flex items-end bg-linear-to-t from-black/60 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <span className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-white">
                     View project <ArrowUpRight size={16} />
                   </span>

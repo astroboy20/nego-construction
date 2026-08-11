@@ -4,18 +4,23 @@ export const company = {
   name: 'NEGO Construction Limited',
   address: '2, Gbolahun Lawal Street, Off Ashabi Cole, Lateef Jakande Road, CBD Ikeja, Lagos',
   phones: ['0909 110 0558', '0703 656 4734'],
-  intro: 'NEGO Construction is an indigenous company incorporated to carry out the business of engineering construction. Over time, we have steadily grown to become known for our specialized services across infrastructure, residential and commercial development.',
-  story: 'The training background of our management team places the company in an advantageous position to handle various forms of projects as project managers or contractors. Our endeavour towards excellence in construction quality, safety performance, employee satisfaction and social responsibility has enabled us to become a trusted and sought-after engineering, procurement, construction, operations and project management company.',
-  vision: 'To keep pace with the evolving construction landscape and, in partnership with our clients, never fail to deliver personalized services, superior craftsmanship and enduring value to every project that we undertake.',
-  mission: ['To offer innovative and cost-effective solutions to our clients in conception, engineering, design, construction and long-term maintenance.', 'To be the foremost indigenous firm with a reputation for integrity, short construction schedules and a motivated workforce which is continuously trained.', 'To be committed to the observance of all health, safety and environmental requirements in accordance with international practice.'],
+  intro: 'NEGO Construction is an indigenous company incorporated to carry out the business of engineering construction. Over time, we have gradually but steadily grown to become known for our specialised services across infrastructure, residential and commercial development.',
+  story: 'The training background of our management team places us in an advantageous position to handle various forms of projects — as project managers or contractors. Our commitment to excellence in construction quality, safety performance, employee satisfaction and social responsibility has enabled us to become a trusted and sought-after engineering, procurement, construction, operations and project management company.',
+  social: 'NEGO is committed to social responsibility, providing suitable training, employment and growth opportunities to Nigerians at all levels. We believe that what we build should benefit not just our clients, but the communities in which we work.',
+  vision: 'To keep pace with the evolving construction landscape and, in partnership with our clients, never fail to deliver personalised services, superior craftsmanship and enduring value to every project we undertake.',
+  mission: [
+    'To offer innovative and cost-effective solutions to our clients in conception, engineering, design, construction and long-term maintenance.',
+    'To be the foremost indigenous firm with a reputation for integrity, short construction schedules and a motivated workforce which is continuously trained.',
+    'To be committed to the observance of all health, safety and environmental requirements in accordance with international practice.',
+  ],
 }
 
 export const strengths = [
-  'NEGO has carried out various projects which include commercial buildings, industrial buildings, office complexes, roads, social and recreational buildings, town settlement, housing projects, educational building, stadium and more.',
-  'NEGO has the experience and expertise to undertake construction projects of scale and technical complexity. Its portfolio of completed and on-going projects is impressive as it is diverse.',
-  'NEGO has delivered projects, providing value-added engineering, construction and service skills to customers for whom the quality of execution, efficiency and reliability are critical.',
-  'NEGO always has the highest concern for safety and this is evidenced by securing some of the best records for safety in its operations.',
-  'NEGO is committed to social responsibilities and is providing suitable training, employment and growth opportunities to Nigerians at all levels.',
+  'Over the years, NEGO has carried out a diverse range of projects — commercial buildings, industrial buildings, office complexes, roads, social and recreational facilities, town settlements, housing projects, educational buildings, stadia and more.',
+  'We have the experience and expertise to undertake construction projects of scale and technical complexity. Our portfolio of completed and ongoing projects is as impressive as it is diverse.',
+  'NEGO has delivered projects providing value-added engineering, construction and service skills to clients for whom quality of execution, efficiency and reliability are critical.',
+  'NEGO always has the highest concern for safety. This is evidenced by securing some of the best records for safety in our operations.',
+  'NEGO is committed to social responsibility, providing suitable training, employment and growth opportunities to Nigerians at all levels.',
 ]
 
 export const qualityStandards = ['Built in accordance with contract specifications and drawings', 'In compliance with building regulations', 'In compliance with statutory requirements', 'In conformity with industry best standards', 'In compliance with planning conditions where applicable', 'Completed to the satisfaction of the design team and clients']

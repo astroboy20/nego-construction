@@ -39,7 +39,7 @@ export default function ImoHillsFarmPage() {
         />
 
         {/* Hero image */}
-        <div className="relative aspect-[16/7] w-full overflow-hidden">
+        <div className="relative aspect-16/7 w-full overflow-hidden">
           <Image
             src="/imo-hills-1.jpeg"
             alt="Imo Hills Farm Project, Ilesha, Osun State"
@@ -47,7 +47,7 @@ export default function ImoHillsFarmPage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
         </div>
 
         {/* About section */}
@@ -55,7 +55,7 @@ export default function ImoHillsFarmPage() {
           <div className="grid gap-12 md:grid-cols-[1.2fr_.8fr] md:gap-20">
             <Reveal>
               <p className="eyebrow text-accent">About the project</p>
-              <h2 className="mt-4 text-4xl font-black tracking-[-0.05em] sm:text-5xl">
+              <h2 className="mt-4 text-4xl font-black tracking-tighter sm:text-5xl">
                 Infrastructure supporting agricultural growth.
               </h2>
               <p className="mt-6 leading-7 text-muted-foreground">
@@ -107,7 +107,7 @@ export default function ImoHillsFarmPage() {
           <div className="container">
             <Reveal>
               <p className="eyebrow text-accent">What we delivered</p>
-              <h2 className="mt-4 text-4xl font-black tracking-[-0.05em] sm:text-5xl">
+              <h2 className="mt-4 text-4xl font-black tracking-tighter sm:text-5xl">
                 Purpose-built agricultural infrastructure.
               </h2>
             </Reveal>
@@ -131,7 +131,7 @@ export default function ImoHillsFarmPage() {
         <section className="container py-16 sm:py-24">
           <Reveal>
             <p className="eyebrow text-accent">Gallery</p>
-            <h2 className="mt-4 text-4xl font-black tracking-[-0.05em]">
+            <h2 className="mt-4 text-4xl font-black tracking-tighter">
               The completed facility.
             </h2>
           </Reveal>
@@ -151,7 +151,7 @@ export default function ImoHillsFarmPage() {
               },
             ].map(({ src, alt }, i) => (
               <Reveal key={src} delay={i * 80}>
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative aspect-4/3 overflow-hidden">
                   <Image
                     src={src}
                     alt={alt}

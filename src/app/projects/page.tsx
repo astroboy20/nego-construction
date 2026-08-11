@@ -64,7 +64,7 @@ export default function ProjectsPage() {
                 key={project.slug}
                 className="grid gap-8 md:grid-cols-[1.35fr_.65fr] md:items-center"
               >
-                <div className="relative aspect-[4/3] overflow-hidden border border-border bg-muted">
+                <div className="relative aspect-4/3 overflow-hidden border border-border bg-muted">
                   <Image
                     src={
                       project.slug === 'lily-park'
@@ -131,7 +131,7 @@ export default function ProjectsPage() {
           <div className="container">
             <Reveal>
               <p className="eyebrow text-accent">Complete portfolio</p>
-              <h2 className="mt-4 text-4xl font-black tracking-[-0.05em] sm:text-5xl">
+              <h2 className="mt-4 text-4xl font-black tracking-tighter sm:text-5xl">
                 26 projects delivered across Nigeria.
               </h2>
               <p className="mt-5 max-w-2xl leading-7 text-muted-foreground">
