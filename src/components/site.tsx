@@ -30,7 +30,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { projects, services, testimonials } from "@/lib/site-data";
+import { company, projects, services, testimonials } from "@/lib/site-data";
 
 export function Logo() {
   return (
@@ -305,6 +305,17 @@ export function Footer() {
             >
               <Mail />
             </a>
+          </div>
+          <div className="mt-5 flex flex-col gap-2">
+            {company.phones.map((phone) => (
+              <a
+                key={phone}
+                href={`tel:${phone.replace(/\s/g, '')}`}
+                className="text-sm text-primary-foreground/70 transition-colors hover:text-accent"
+              >
+                {phone}
+              </a>
+            ))}
           </div>
         </div>
       </div>
