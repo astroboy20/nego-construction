@@ -3,12 +3,12 @@ import { FormEvent, useState } from "react";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import {
   CtaBand,
-  MediaSlot,
   PageHero,
   SectionHeading,
   SiteShell,
 } from "@/components/site";
 import { company } from "@/lib/site-data";
+import { MapboxAddressMap } from "@/lib/map";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -27,7 +27,7 @@ export default function ContactPage() {
         <section className="container grid gap-12 py-20 md:grid-cols-[1.1fr_.9fr] md:py-28">
           <form
             onSubmit={submit}
-            className="flex flex-col gap-6 border border-border p-7 md:p-10"
+            className="flex flex-col gap-6 border border-border p-7 md:p-10 h-fit"
           >
             <div>
               <p className="eyebrow text-accent">Start a conversation</p>
@@ -76,7 +76,7 @@ export default function ContactPage() {
                 className="border border-input bg-background px-4 py-3 font-normal outline-none focus:ring-2 focus:ring-ring"
               />
             </label>
-            <button className="button-primary self-start" type="submit">
+            <button className="button-primary self-start w-full" type="submit">
               {sent ? "Enquiry received" : "Submit enquiry"}{" "}
               <Send data-icon="inline-end" />
             </button>
@@ -105,9 +105,12 @@ export default function ContactPage() {
                 </p>
               </div>
             </div>
-            <MediaSlot
+            <MapboxAddressMap
+              address={company.address}
               label="Office/location map slot · supplied embed pending"
               tall
+              height="60dvh"
+              className="border border-border md:h-[60dvh] lg:h-[70dvh]"
             />
           </aside>
         </section>

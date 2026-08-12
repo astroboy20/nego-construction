@@ -3,7 +3,7 @@ export type Project = { slug: string; name: string; type: string; location: stri
 export const company = {
   name: 'NEGO Construction Limited',
   address: '2, Gbolahun Lawal Street, Off Ashabi Cole, Lateef Jakande Road, CBD Ikeja, Lagos',
-  phones: ['0909 110 0558', '0703 656 4734', '08055235816', '08074151014'],
+  phones: ['0805 523 5816', '0807 415 1014'],
   intro: 'NEGO Construction is an indigenous company incorporated to carry out the business of engineering construction. Over time, we have gradually but steadily grown to become known for our specialised services across infrastructure, residential and commercial development.',
   story: 'The training background of our management team places us in an advantageous position to handle various forms of projects — as project managers or contractors. Our commitment to excellence in construction quality, safety performance, employee satisfaction and social responsibility has enabled us to become a trusted and sought-after engineering, procurement, construction, operations and project management company.',
   social: 'NEGO is committed to social responsibility, providing suitable training, employment and growth opportunities to Nigerians at all levels. We believe that what we build should benefit not just our clients, but the communities in which we work.',
