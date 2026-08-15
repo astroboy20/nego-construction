@@ -49,6 +49,7 @@ export function Logo() {
 
 const navLinks = [
   ["About", "/about"],
+  ["Lily Park", "/projects/lily-park"],
   ["Services", "/services"],
   ["Projects", "/projects"],
   ["Team", "/team"],
@@ -602,8 +603,8 @@ export function VideoPrompt() {
 
         <div className="mt-6 flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
           <p className="max-w-lg text-sm leading-6 text-muted-foreground">
-            A new NEGO project is taking shape. Explore the thinking behind the
-            build and what comes next.
+            All units are now available for sale. Explore the thinking behind
+            the build and secure your place at Lily Park.
           </p>
           <Link
             href="/projects/lily-park"

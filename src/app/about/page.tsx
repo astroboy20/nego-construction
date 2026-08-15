@@ -56,8 +56,8 @@ export default function AboutPage() {
             </Reveal>
             <div className="grid gap-4 md:grid-cols-3">
               {strengths.map((strength, index) => (
-                <Reveal key={strength} delay={index * 70}>
-                  <article className="flex min-h-52 flex-col justify-between border border-border bg-background p-7">
+                <Reveal key={strength} delay={index * 70} className="h-full">
+                  <article className="flex h-full min-h-52 flex-col justify-between border border-border bg-background p-7">
                     <span className="font-display text-4xl font-bold text-accent">
                       0{index + 1}
                     </span>
@@ -74,16 +74,16 @@ export default function AboutPage() {
         {/* Vision & Mission */}
         <section className="bg-primary py-20 text-primary-foreground md:py-28">
           <div className="container grid gap-5 md:grid-cols-[.8fr_1.2fr]">
-            <Reveal>
-              <article className="border border-primary-foreground/15 p-8 md:p-12">
+            <Reveal className="h-full">
+              <article className="h-full border border-primary-foreground/15 p-8 md:p-12">
                 <p className="eyebrow text-accent">Our vision</p>
                 <p className="mt-7 text-2xl font-bold leading-9">
                   {company.vision}
                 </p>
               </article>
             </Reveal>
-            <Reveal delay={80}>
-              <article className="border border-primary-foreground/15 p-8 md:p-12">
+            <Reveal delay={80} className="h-full">
+              <article className="h-full border border-primary-foreground/15 p-8 md:p-12">
                 <p className="eyebrow text-accent">Our mission</p>
                 <div className="mt-7 flex flex-col gap-6">
                   {company.mission.map((item, index) => (
@@ -121,8 +121,8 @@ export default function AboutPage() {
                 </div>
                 <p className="mt-5 leading-7 text-muted-foreground">
                   Our quality management system is reviewed and revised
-                  continually to ensure every project we deliver meets
-                  the standards our clients and communities deserve.
+                  continually to ensure every project we deliver meets the
+                  standards our clients and communities deserve.
                 </p>
                 <ol className="mt-7 flex flex-col gap-4">
                   {qualityStandards.map((item, index) => (
@@ -144,8 +144,8 @@ export default function AboutPage() {
                 </div>
                 <p className="mt-5 leading-7 text-muted-foreground">
                   NEGO always has the highest concern for safety. This is
-                  evidenced by securing some of the best safety records in
-                  our operations.
+                  evidenced by securing some of the best safety records in our
+                  operations.
                 </p>
                 <ol className="mt-7 flex flex-col gap-4">
                   {safetyCommitments.map((item, index) => (

@@ -2,7 +2,6 @@
 import { FormEvent, useState } from "react";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import {
-  CtaBand,
   PageHero,
   SectionHeading,
   SiteShell,
@@ -21,7 +20,7 @@ export default function ContactPage() {
       <main>
         <PageHero
           eyebrow="Contact NEGO"
-          title="Tell us what you are building."
+          title="Let's build together."
           description="We are happy to hear from you. Visit our office, give us a call or fill out the enquiry form to get a quick response from our team."
         />
         <section className="container grid gap-12 py-20 md:grid-cols-[1.1fr_.9fr] md:py-28">
@@ -140,7 +139,6 @@ export default function ContactPage() {
           </div>
         </section>
       </main>
-      <CtaBand />
     </SiteShell>
   );
 }

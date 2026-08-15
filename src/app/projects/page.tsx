@@ -62,7 +62,7 @@ export default function ProjectsPage() {
             {shown.map((project, index) => (
               <article
                 key={project.slug}
-                className="grid gap-8 md:grid-cols-[1.35fr_.65fr] md:items-center"
+                className="h-full grid gap-8 md:grid-cols-[1.35fr_.65fr] md:items-center"
               >
                 <div className="relative aspect-4/3 overflow-hidden border border-border bg-muted">
                   <Image
@@ -118,7 +118,7 @@ export default function ProjectsPage() {
                     href={`/projects/${project.slug}`}
                     className="button-outline self-start"
                   >
-                    View case study <ArrowUpRight data-icon="inline-end" />
+                    View <ArrowUpRight data-icon="inline-end" />
                   </Link>
                 </div>
               </article>
