@@ -45,6 +45,7 @@ export default function AbachaRoadPage() {
             alt="Abacha Road construction, Rivers State"
             fill
             className="object-cover"
+            sizes="100vw"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -148,6 +149,7 @@ export default function AbachaRoadPage() {
                     alt={alt}
                     fill
                     className="object-cover transition-transform duration-700 hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
               </Reveal>

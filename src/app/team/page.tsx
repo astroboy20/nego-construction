@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { CtaBand, PageHero, Reveal, SiteShell } from "@/components/site";
 import { team } from "@/lib/site-data";
 
@@ -14,20 +15,49 @@ export default function TeamPage() {
         />
 
         <section className="container py-20 md:py-28">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {team.map((member, index) => (
               <Reveal key={member.name} delay={index * 70}>
-                <article className="flex flex-col border-t-2 border-accent bg-background p-7">
-                  <p className="eyebrow text-accent">{member.role}</p>
-                  <h2 className="mt-3 text-xl font-black">{member.name}</h2>
-                  {member.credentials ? (
-                    <p className="mt-1 text-xs font-semibold text-muted-foreground">
-                      {member.credentials}
+                <article className="group flex h-full flex-col overflow-hidden border border-border bg-background">
+                  {/* Photo or placeholder */}
+                  <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                    {member.photo ? (
+                      <Image
+                        src={member.photo}
+                        alt={member.name}
+                        fill
+                        className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    ) : (
+                      <div className="flex h-full flex-col items-center justify-center gap-3 bg-primary/5">
+                        <div className="flex size-16 items-center justify-center bg-primary text-2xl font-black text-primary-foreground">
+                          {member.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                            .slice(0, 2)}
+                        </div>
+                        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                          Photo coming soon
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Info — flex-1 so all cards stretch to same height */}
+                  <div className="flex flex-1 flex-col gap-3 border-t-2 border-accent p-6">
+                    <p className="eyebrow text-accent">{member.role}</p>
+                    <h2 className="text-xl font-black">{member.name}</h2>
+                    {member.credentials ? (
+                      <p className="text-xs font-semibold text-muted-foreground">
+                        {member.credentials}
+                      </p>
+                    ) : null}
+                    <p className="mt-1 text-sm leading-7 text-muted-foreground">
+                      {member.bio}
                     </p>
-                  ) : null}
-                  <p className="mt-5 text-sm leading-7 text-muted-foreground">
-                    {member.bio}
-                  </p>
+                  </div>
                 </article>
               </Reveal>
             ))}

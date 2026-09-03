@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   ArrowUpRight,
   Check,
@@ -9,7 +10,7 @@ import {
   ChevronRight,
   X,
 } from "lucide-react";
-import { CtaBand, PageHero, Reveal, ScrollScene, SiteShell } from "@/components/site";
+import { CtaBand, PageHero, Reveal, SiteShell } from "@/components/site";
 
 const perks = [
   "Fully Serviced",
@@ -97,19 +98,35 @@ const buildingTypes = [
     description:
       "A premium three-bedroom fully detached duplex offering privacy and space, with high-quality finishes throughout every room.",
     images: [
-      { src: "/3-bedroom-detached/Living-Room-1.png", alt: "Living Room 1" },
-      { src: "/3-bedroom-detached/Living-Room-2.png", alt: "Living Room 2" },
-      { src: "/3-bedroom-detached/Dining.png", alt: "Dining" },
-      { src: "/3-bedroom-detached/Kitchen-1.png", alt: "Kitchen 1" },
-      { src: "/3-bedroom-detached/Kitchen-2.png", alt: "Kitchen 2" },
-      { src: "/3-bedroom-detached/Bed-1-A.png", alt: "Bedroom 1A" },
-      { src: "/3-bedroom-detached/Bed-1-B.png", alt: "Bedroom 1B" },
-      { src: "/3-bedroom-detached/Bed-2-A.png", alt: "Bedroom 2" },
-      { src: "/3-bedroom-detached/Bath-1-A.png", alt: "Bathroom 1A" },
-      { src: "/3-bedroom-detached/Bath-1-B.png", alt: "Bathroom 1B" },
-      { src: "/3-bedroom-detached/Bath-2.png", alt: "Bathroom 2" },
-      { src: "/3-bedroom-detached/Stair-Well-lobby.png", alt: "Stairwell" },
-      { src: "/3-bedroom-detached/Stair-well-lobby-2.png", alt: "Lobby" },
+      { src: "/3-bedroom-detached/exterior.jpg", alt: "Exterior" },
+      { src: "/3-bedroom-detached/exterior-shot.jpg", alt: "Exterior 2" },
+      { src: "/3-bedroom-detached/exterior-parking.jpg", alt: "Exterior Parking" },
+      { src: "/3-bedroom-detached/living-room-1.jpg", alt: "Living Room 1" },
+      { src: "/3-bedroom-detached/living-room.jpg", alt: "Living Room 2" },
+      { src: "/3-bedroom-detached/livingroom-stairs.jpg", alt: "Living & Stairs" },
+      { src: "/3-bedroom-detached/study-and-dining.jpg", alt: "Study & Dining" },
+      { src: "/3-bedroom-detached/dining-area.jpg", alt: "Dining Area" },
+      { src: "/3-bedroom-detached/Dining.jpg", alt: "Dining 2" },
+      { src: "/3-bedroom-detached/dining-2.jpg", alt: "Dining 3" },
+      { src: "/3-bedroom-detached/kitchen.jpg", alt: "Kitchen" },
+      { src: "/3-bedroom-detached/kictchen-3.jpg", alt: "Kitchen 2" },
+      { src: "/3-bedroom-detached/kitchen_2.jpg", alt: "Kitchen 3" },
+      { src: "/3-bedroom-detached/Kitchen-1.jpg", alt: "Kitchen 4" },
+      { src: "/3-bedroom-detached/Kitchen-2.jpg", alt: "Kitchen 5" },
+      { src: "/3-bedroom-detached/master-bedroom.jpg", alt: "Master Bedroom" },
+      { src: "/3-bedroom-detached/Bed-1-A.jpg", alt: "Bedroom 1A" },
+      { src: "/3-bedroom-detached/Bed-1-B.jpg", alt: "Bedroom 1B" },
+      { src: "/3-bedroom-detached/Bed-2-A.jpg", alt: "Bedroom 2" },
+      { src: "/3-bedroom-detached/bedroom-2.jpg", alt: "Bedroom 3" },
+      { src: "/3-bedroom-detached/walk-in-closet.jpg", alt: "Walk-in Closet" },
+      { src: "/3-bedroom-detached/Bath-1-A.jpg", alt: "Bathroom 1A" },
+      { src: "/3-bedroom-detached/Bath-1-B.jpg", alt: "Bathroom 1B" },
+      { src: "/3-bedroom-detached/Bath-2.jpg", alt: "Bathroom 2" },
+      { src: "/3-bedroom-detached/master-bathroom.jpg", alt: "Master Bathroom" },
+      { src: "/3-bedroom-detached/upstairs-lobby.jpg", alt: "Upstairs Lobby" },
+      { src: "/3-bedroom-detached/Stair-Well-lobby.jpg", alt: "Stairwell" },
+      { src: "/3-bedroom-detached/Stair-well-lobby-2.jpg", alt: "Lobby 2" },
+      { src: "/3-bedroom-detached/Staircase.jpg", alt: "Staircase" },
     ],
   },
   {
@@ -118,24 +135,97 @@ const buildingTypes = [
     description:
       "Three-bedroom semi-detached duplex combining the best of shared-wall efficiency and generous interior space — a popular choice for families.",
     images: [
-      { src: "/3-bedroom-semi-detached/living-01-2.jpg", alt: "Living 1" },
-      { src: "/3-bedroom-semi-detached/living-02-2.jpg", alt: "Living 2" },
-      { src: "/3-bedroom-semi-detached/living-03-2.jpg", alt: "Living 3" },
+      { src: "/3-bedroom-semi-detached/living-room.jpg", alt: "Living Room" },
+      { src: "/3-bedroom-semi-detached/living-area.jpg", alt: "Living Area" },
+      { src: "/3-bedroom-semi-detached/living-room-2.jpg", alt: "Living Room 2" },
+      { src: "/3-bedroom-semi-detached/lobby.jpg", alt: "Lobby" },
+      { src: "/3-bedroom-semi-detached/lobby-2.jpg", alt: "Lobby 2" },
       { src: "/3-bedroom-semi-detached/dining-2.jpg", alt: "Dining" },
-      { src: "/3-bedroom-semi-detached/kitchen.jpg", alt: "Kitchen 1" },
+      { src: "/3-bedroom-semi-detached/pantry.jpg", alt: "Pantry" },
+      { src: "/3-bedroom-semi-detached/kitchen.jpg", alt: "Kitchen" },
       { src: "/3-bedroom-semi-detached/kitchen-2.jpg", alt: "Kitchen 2" },
-      { src: "/3-bedroom-semi-detached/masters-01-3.jpg", alt: "Master Bedroom 1" },
-      { src: "/3-bedroom-semi-detached/masters-02-2.jpg", alt: "Master Bedroom 2" },
-      { src: "/3-bedroom-semi-detached/bedroom-a01-2.jpg", alt: "Bedroom A" },
-      { src: "/3-bedroom-semi-detached/bedroom-b01-1.jpg", alt: "Bedroom B" },
-      { src: "/3-bedroom-semi-detached/Master-toilet.jpg", alt: "Master Bathroom" },
-      { src: "/3-bedroom-semi-detached/Typical-toilet.jpg", alt: "Bathroom" },
+      { src: "/3-bedroom-semi-detached/master-bedroom.jpg", alt: "Master Bedroom" },
+      { src: "/3-bedroom-semi-detached/master-bedroom-2.jpg", alt: "Master Bedroom 2" },
+      { src: "/3-bedroom-semi-detached/master-walk-in-and-bedroom.jpg", alt: "Walk-in & Bedroom" },
+      { src: "/3-bedroom-semi-detached/bedroom-2.jpg", alt: "Bedroom 2" },
+      { src: "/3-bedroom-semi-detached/master-bathroom.jpg", alt: "Master Bathroom" },
+      { src: "/3-bedroom-semi-detached/Master-toilet.jpg", alt: "Bathroom" },
     ],
   },
 ];
 
-// ── Lightbox ──────────────────────────────────────────────────────────────────
-function Lightbox({
+const djiSlides = [
+  { src: "/DJI_0345.jpg", alt: "Lily Park aerial view 01" },
+  { src: "/DJI_0350.jpg", alt: "Lily Park aerial view 02" },
+  { src: "/DJI_0352.jpg", alt: "Lily Park aerial view 03" },
+  { src: "/DJI_0356.jpg", alt: "Lily Park aerial view 04" },
+  { src: "/DJI_0359.jpg", alt: "Lily Park aerial view 05" },
+  { src: "/DJI_0367.jpg", alt: "Lily Park aerial view 06" },
+  { src: "/DJI_0369.jpg", alt: "Lily Park aerial view 07" },
+  { src: "/DJI_0372.jpg", alt: "Lily Park aerial view 08" },
+  { src: "/DJI_0378.jpg", alt: "Lily Park aerial view 09" },
+  { src: "/DJI_0380.jpg", alt: "Lily Park aerial view 10" },
+];
+
+function AerialSlider() {
+  const [current, setCurrent] = useState(0);
+  const total = djiSlides.length;
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+    const id = setInterval(() => {
+      setCurrent((c) => (c + 1) % total);
+    }, 4500);
+    return () => clearInterval(id);
+  }, [total]);
+
+  const goTo = (i: number) => setCurrent(i);
+
+  return (
+    <div className="relative aspect-[16/7] w-full overflow-hidden bg-muted">
+      {djiSlides.map((slide, i) => (
+        <div
+          key={slide.src}
+          className={`absolute inset-0 transition-opacity duration-1000 ${i === current ? "opacity-100" : "opacity-0"}`}
+          aria-hidden={i !== current}
+        >
+          <Image
+            src={slide.src}
+            alt={slide.alt}
+            fill
+            className="object-cover"
+            priority={i === 0}
+          />
+        </div>
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+      <div className="absolute bottom-6 left-6 bg-accent px-4 py-2">
+        <p className="text-xs font-bold uppercase tracking-widest text-accent-foreground">
+          All Units For Sale — Enquire Today
+        </p>
+      </div>
+      {/* Dot indicators */}
+      <div className="absolute bottom-6 right-6 flex gap-1.5">
+        {djiSlides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? "w-5 bg-accent" : "w-1.5 bg-white/40"}`}
+          />
+        ))}
+      </div>
+      {/* Counter */}
+      <p className="absolute right-6 top-6 font-mono text-xs font-bold text-white/60">
+        {String(current + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+      </p>
+    </div>
+  );
+}
+
+// ── Image Modal ───────────────────────────────────────────────────────────────
+function ImageModal({
   images,
   startIndex,
   onClose,
@@ -145,73 +235,102 @@ function Lightbox({
   onClose: () => void;
 }) {
   const [index, setIndex] = useState(startIndex);
-  const prev = () => setIndex((i) => (i - 1 + images.length) % images.length);
-  const next = () => setIndex((i) => (i + 1) % images.length);
+  const total = images.length;
 
-  return (
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") setIndex((i) => (i - 1 + total) % total);
+      if (e.key === "ArrowRight") setIndex((i) => (i + 1) % total);
+    };
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [total, onClose]);
+
+  const modal = (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      style={{ position: "fixed", inset: 0, zIndex: 9999, display: "flex", flexDirection: "column" }}
+      className="bg-black/90"
       role="dialog"
       aria-modal="true"
-      aria-label="Image lightbox"
     >
-      <button
-        onClick={onClose}
-        className="absolute right-4 top-4 inline-flex size-10 items-center justify-center border border-white/20 text-white hover:border-accent hover:text-accent"
-        aria-label="Close"
-      >
-        <X size={18} />
-      </button>
+      {/* Top bar */}
+      <div className="flex shrink-0 items-center justify-between bg-background border-b border-border px-5 py-3">
+        <p className="text-sm font-bold leading-none">
+          {images[index].alt}
+          <span className="ml-3 text-xs font-normal text-muted-foreground">
+            {index + 1} / {total}
+          </span>
+        </p>
+        <button
+          onClick={onClose}
+          className="inline-flex size-9 items-center justify-center border border-border hover:border-accent hover:text-accent transition-colors"
+          aria-label="Close"
+        >
+          <X size={16} />
+        </button>
+      </div>
 
-      {/* Counter */}
-      <p className="absolute left-1/2 top-4 -translate-x-1/2 text-xs font-bold uppercase tracking-widest text-white/50">
-        {index + 1} / {images.length}
-      </p>
-
-      {/* Image */}
-      <div className="relative h-[75vh] w-full max-w-4xl">
+      {/* Image fills remaining space */}
+      <div style={{ position: "relative", flex: 1, minHeight: 0 }}>
         <Image
           key={images[index].src}
           src={images[index].src}
           alt={images[index].alt}
           fill
           className="object-contain"
+          sizes="100vw"
           priority
         />
+        <button
+          onClick={() => setIndex((i) => (i - 1 + total) % total)}
+          style={{ position: "absolute", inset: "0 auto 0 0", width: "4rem" }}
+          className="flex items-center justify-center text-white/50 hover:text-white transition-colors"
+          aria-label="Previous"
+        >
+          <ChevronLeft size={40} strokeWidth={1.5} />
+        </button>
+        <button
+          onClick={() => setIndex((i) => (i + 1) % total)}
+          style={{ position: "absolute", inset: "0 0 0 auto", width: "4rem" }}
+          className="flex items-center justify-center text-white/50 hover:text-white transition-colors"
+          aria-label="Next"
+        >
+          <ChevronRight size={40} strokeWidth={1.5} />
+        </button>
       </div>
 
-      {/* Prev / Next */}
-      <button
-        onClick={prev}
-        className="absolute left-3 top-1/2 -translate-y-1/2 inline-flex size-11 items-center justify-center border border-white/20 text-white hover:border-accent hover:text-accent sm:left-6"
-        aria-label="Previous image"
-      >
-        <ChevronLeft size={20} />
-      </button>
-      <button
-        onClick={next}
-        className="absolute right-3 top-1/2 -translate-y-1/2 inline-flex size-11 items-center justify-center border border-white/20 text-white hover:border-accent hover:text-accent sm:right-6"
-        aria-label="Next image"
-      >
-        <ChevronRight size={20} />
-      </button>
-
-      {/* Caption */}
-      <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-sm font-semibold text-white/70">
-        {images[index].alt}
-      </p>
+      {/* Dot indicators */}
+      <div className="flex shrink-0 items-center justify-center gap-1.5 bg-background border-t border-border px-5 py-3">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex(i)}
+            aria-label={`Go to image ${i + 1}`}
+            className={`h-1.5 rounded-full transition-all duration-200 ${
+              i === index ? "w-5 bg-accent" : "w-1.5 bg-border hover:bg-muted-foreground"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
+
+  return createPortal(modal, document.body);
 }
 
-// ── Building type gallery with lightbox ───────────────────────────────────────
+// ── Building type gallery with modal ─────────────────────────────────────────
 function BuildingGallery({
   images,
 }: {
   images: { src: string; alt: string }[];
 }) {
-  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [modal, setModal] = useState<number | null>(null);
 
   return (
     <>
@@ -219,7 +338,7 @@ function BuildingGallery({
         {images.map(({ src, alt }, i) => (
           <button
             key={src}
-            onClick={() => setLightbox(i)}
+            onClick={() => setModal(i)}
             className="group relative aspect-[4/3] overflow-hidden bg-muted focus:outline-none focus:ring-2 focus:ring-accent"
             aria-label={`View ${alt}`}
           >
@@ -228,16 +347,17 @@ function BuildingGallery({
               alt={alt}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
             <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
           </button>
         ))}
       </div>
-      {lightbox !== null && (
-        <Lightbox
+      {modal !== null && (
+        <ImageModal
           images={images}
-          startIndex={lightbox}
-          onClose={() => setLightbox(null)}
+          startIndex={modal}
+          onClose={() => setModal(null)}
         />
       )}
     </>
@@ -258,24 +378,8 @@ export default function LilyParkPage() {
           description="An estate where wellness, peace and community come together — developed and constructed by NEGO Construction in Abijo GRA, Lagos."
         />
 
-        {/* Hero image with parallax */}
-        <div className="relative aspect-[16/7] w-full overflow-hidden">
-          <ScrollScene intensity={12} className="absolute inset-0">
-            <Image
-              src="/lily-project-big-image.jpg"
-              alt="Lily Park estate aerial view, Abijo GRA, Lagos"
-              fill
-              className="scale-110 object-cover"
-              priority
-            />
-          </ScrollScene>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-          <div className="absolute bottom-6 left-6 bg-accent px-4 py-2">
-            <p className="text-xs font-bold uppercase tracking-widest text-accent-foreground">
-              All Units For Sale — Enquire Today
-            </p>
-          </div>
-        </div>
+        {/* Hero aerial slideshow */}
+        <AerialSlider />
 
         {/* About + Project facts */}
         <section className="container py-16 sm:py-24">

@@ -301,7 +301,7 @@ export function Footer() {
             </a>
             <a
               className="social"
-              href="mailto:negoconstruction@yahoo.com"
+              href="mailto:info@negoconstruction.com"
               aria-label="Email NEGO Construction"
             >
               <Mail />
@@ -317,6 +317,12 @@ export function Footer() {
                 {phone}
               </a>
             ))}
+            <a
+              href={`mailto:${company.email}`}
+              className="text-sm text-primary-foreground/70 transition-colors hover:text-accent"
+            >
+              {company.email}
+            </a>
           </div>
         </div>
       </div>
@@ -431,6 +437,7 @@ export function ProjectCard({
               height={525}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           ) : (
             <div className="flex h-full items-center justify-center">
@@ -691,6 +698,7 @@ export function HeroSlideshow() {
             alt={slide.alt}
             fill
             className="object-cover"
+            sizes="100vw"
             priority={i === 0}
           />
         </div>

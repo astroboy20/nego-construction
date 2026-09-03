@@ -45,6 +45,7 @@ export default function ComprehensiveHealthcareCentrePage() {
             alt="Comprehensive Healthcare Centre, Onna LGA, Akwa-Ibom"
             fill
             className="object-cover"
+            sizes="100vw"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -157,6 +158,7 @@ export default function ComprehensiveHealthcareCentrePage() {
                     alt={alt}
                     fill
                     className="object-cover transition-transform duration-700 hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
               </Reveal>

@@ -82,6 +82,7 @@ export default function ProjectsPage() {
                     alt={project.name}
                     fill
                     className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 60vw"
                   />
                 </div>
                 <div className="flex flex-col gap-5">

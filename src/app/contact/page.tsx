@@ -1,6 +1,6 @@
 "use client";
-import { FormEvent, useState } from "react";
-import { Mail, MapPin, Phone, Send } from "lucide-react";
+import { FormEvent, useEffect, useState } from "react";
+import { CheckCircle2, Mail, MapPin, Phone, Send, X } from "lucide-react";
 import {
   PageHero,
   SectionHeading,
@@ -9,20 +9,79 @@ import {
 import { company } from "@/lib/site-data";
 import { MapboxAddressMap } from "@/lib/map";
 
+// ── Minimal toast ─────────────────────────────────────────────────────────────
+function Toast({ message, onClose }: { message: string; onClose: () => void }) {
+  useEffect(() => {
+    const id = setTimeout(onClose, 5000);
+    return () => clearTimeout(id);
+  }, [onClose]);
+
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 border border-border bg-background px-5 py-4 shadow-lg"
+      style={{ animation: "toast-in 300ms cubic-bezier(0.22,1,0.36,1)" }}
+    >
+      <CheckCircle2 size={18} className="shrink-0 text-accent" />
+      <p className="text-sm font-semibold">{message}</p>
+      <button
+        onClick={onClose}
+        aria-label="Dismiss"
+        className="ml-2 text-muted-foreground hover:text-foreground"
+      >
+        <X size={14} />
+      </button>
+    </div>
+  );
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+const TO = "info@negoconstruction.com";
+
 export default function ContactPage() {
-  const [sent, setSent] = useState(false);
-  function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setSent(true);
+  const [toast, setToast] = useState(false);
+
+  function submit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const firstName = fd.get("firstName") as string;
+    const lastName  = fd.get("lastName")  as string;
+    const email     = fd.get("email")     as string;
+    const phone     = fd.get("phone")     as string;
+    const message   = fd.get("message")   as string;
+
+    const subject = encodeURIComponent(
+      `Enquiry from ${firstName} ${lastName} — NEGO Construction`
+    );
+    const body = encodeURIComponent(
+      `Name: ${firstName} ${lastName}\nEmail: ${email}\nPhone: ${phone || "—"}\n\n${message}`
+    );
+
+    // Open user's email client pre-filled
+    window.location.href = `mailto:${TO}?subject=${subject}&body=${body}`;
+
+    // Show toast after a short delay (gives mailto time to trigger)
+    setTimeout(() => setToast(true), 400);
+    (e.target as HTMLFormElement).reset();
   }
+
   return (
     <SiteShell>
+      {toast && (
+        <Toast
+          message="Your email client has opened. Please send the message to complete your enquiry."
+          onClose={() => setToast(false)}
+        />
+      )}
+
       <main>
         <PageHero
           eyebrow="Contact NEGO"
           title="Let's build together."
           description="We are happy to hear from you. Visit our office, give us a call or fill out the enquiry form to get a quick response from our team."
         />
+
         <section className="container grid gap-12 py-20 md:grid-cols-[1.1fr_.9fr] md:py-28">
           <form
             onSubmit={submit}
@@ -38,10 +97,12 @@ export default function ContactPage() {
                 kind of support you need.
               </p>
             </div>
+
             <div className="grid gap-6 sm:grid-cols-2">
               <label className="flex flex-col gap-2 text-sm font-bold">
-                First name
+                First name *
                 <input
+                  name="firstName"
                   required
                   className="border border-input bg-background px-4 py-3 font-normal outline-none focus:ring-2 focus:ring-ring"
                 />
@@ -49,42 +110,47 @@ export default function ContactPage() {
               <label className="flex flex-col gap-2 text-sm font-bold">
                 Last name
                 <input
-                  required
+                  name="lastName"
                   className="border border-input bg-background px-4 py-3 font-normal outline-none focus:ring-2 focus:ring-ring"
                 />
               </label>
             </div>
+
             <label className="flex flex-col gap-2 text-sm font-bold">
-              Email
+              Email *
               <input
+                name="email"
                 required
                 type="email"
                 className="border border-input bg-background px-4 py-3 font-normal outline-none focus:ring-2 focus:ring-ring"
               />
             </label>
+
             <label className="flex flex-col gap-2 text-sm font-bold">
               Phone number
-              <input className="border border-input bg-background px-4 py-3 font-normal outline-none focus:ring-2 focus:ring-ring" />
-            </label>
-            <label className="flex flex-col gap-2 text-sm font-bold">
-              Inquiry
-              <textarea
-                required
-                rows={7}
-                placeholder="Write your message here..."
+              <input
+                name="phone"
+                type="tel"
                 className="border border-input bg-background px-4 py-3 font-normal outline-none focus:ring-2 focus:ring-ring"
               />
             </label>
-            <button className="button-primary self-start w-full" type="submit">
-              {sent ? "Enquiry received" : "Submit enquiry"}{" "}
-              <Send data-icon="inline-end" />
+
+            <label className="flex flex-col gap-2 text-sm font-bold">
+              Message *
+              <textarea
+                name="message"
+                required
+                rows={7}
+                placeholder="Tell us about your project..."
+                className="border border-input bg-background px-4 py-3 font-normal outline-none focus:ring-2 focus:ring-ring"
+              />
+            </label>
+
+            <button type="submit" className="button-primary w-full">
+              Submit enquiry <Send data-icon="inline-end" />
             </button>
-            {sent && (
-              <p className="text-sm text-primary" role="status">
-                Thanks — your enquiry is ready for the NEGO team to review.
-              </p>
-            )}
           </form>
+
           <aside className="flex flex-col gap-8">
             <div className="border border-border p-8 md:p-10">
               <p className="eyebrow text-accent">Find us</p>
@@ -98,10 +164,13 @@ export default function ContactPage() {
                   <Phone className="shrink-0 text-accent" />
                   {company.phones.join(" · ")}
                 </p>
-                <p className="flex gap-3">
+                <a
+                  href={`mailto:${company.email}`}
+                  className="flex gap-3 hover:text-accent transition-colors"
+                >
                   <Mail className="shrink-0 text-accent" />
-                  negoconstruction@yahoo.com
-                </p>
+                  {company.email}
+                </a>
               </div>
             </div>
             <MapboxAddressMap
@@ -113,6 +182,7 @@ export default function ContactPage() {
             />
           </aside>
         </section>
+
         <section className="bg-muted py-20 md:py-28">
           <div className="container">
             <SectionHeading

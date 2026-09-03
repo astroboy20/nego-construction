@@ -171,6 +171,7 @@ export default function AboutPage() {
                 alt="NEGO Construction — responsible delivery"
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           </Reveal>
