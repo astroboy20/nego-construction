@@ -276,6 +276,7 @@ export function Footer() {
             <Link href="/about">About NEGO</Link>
             <Link href="/projects">Our projects</Link>
             <Link href="/contact">Start a conversation</Link>
+            <Link href="/privacy-policy">Privacy Policy</Link>
           </div>
         </div>
         <div>

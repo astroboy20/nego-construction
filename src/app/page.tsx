@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import {
   CtaBand,
@@ -13,10 +14,42 @@ import {
   VideoPrompt,
 } from "@/components/site";
 import { projects, services } from "@/lib/site-data";
+import { buildWebSiteLD, serializeLD } from "@/lib/json-ld";
+
+export const metadata: Metadata = {
+  title: "NEGO Construction Limited — Infrastructure, Residential & Commercial Projects in Nigeria",
+  description:
+    "NEGO Construction partners with ambitious clients to deliver infrastructure, residential and commercial projects across Nigeria with clarity, care and craft.",
+  openGraph: {
+    title: "NEGO Construction Limited",
+    description:
+      "Infrastructure, residential and commercial projects across Nigeria — built with clarity, care and craft.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "NEGO Construction Limited",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NEGO Construction Limited",
+    description:
+      "Infrastructure, residential and commercial projects across Nigeria — built with clarity, care and craft.",
+    images: ["/og-image.png"],
+  },
+};
 
 export default function Page() {
+  const websiteLD = serializeLD(buildWebSiteLD());
   return (
     <SiteShell>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: websiteLD }}
+      />
       <VideoPrompt />
       <main>
         <section className="hero-section border-b border-border">

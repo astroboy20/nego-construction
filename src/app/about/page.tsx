@@ -1,6 +1,7 @@
 import { ArrowUpRight, Check, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import {
   CtaBand,
   PageHero,
@@ -14,6 +15,32 @@ import {
   safetyCommitments,
   strengths,
 } from "@/lib/site-data";
+
+export const metadata: Metadata = {
+  title: "About NEGO Construction",
+  description:
+    "NEGO Construction is an indigenous construction and engineering company — trusted for over 25 years to deliver infrastructure, residential and commercial projects across Nigeria.",
+  openGraph: {
+    title: "About NEGO Construction",
+    description:
+      "Over 25 years of engineering expertise, quality commitment, and social responsibility — delivering projects that improve lives across Nigeria.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "NEGO Construction Limited — About",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About NEGO Construction",
+    description:
+      "Over 25 years of engineering expertise, quality commitment, and social responsibility — delivering projects that improve lives across Nigeria.",
+    images: ["/og-image.png"],
+  },
+};
 
 export default function AboutPage() {
   return (

@@ -1,11 +1,13 @@
-import { Analytics } from "@vercel/analytics/next";
 import { Inter, Space_Grotesk, Geist } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { buildOrganizationLD, serializeLD } from "@/lib/json-ld";
+import { AnalyticsProvider } from "@/components/analytics-provider";
+import { CookieBanner } from "@/components/cookie-banner";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,11 +39,11 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "NEGO Construction Limited" }],
   creator: "NEGO Construction Limited",
-  metadataBase: new URL("https://negoconstruction.com"),
+  metadataBase: new URL("https://www.negoconstruction.com"),
   openGraph: {
     type: "website",
     locale: "en_NG",
-    url: "https://negoconstruction.com",
+    url: "https://www.negoconstruction.com",
     siteName: "NEGO Construction Limited",
     title: "NEGO Construction Limited",
     description:
@@ -67,12 +69,8 @@ export const metadata: Metadata = {
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
     ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180" },
-    ],
-    other: [
-      { rel: "manifest", url: "/site.webmanifest" },
-    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    other: [{ rel: "manifest", url: "/site.webmanifest" }],
   },
 };
 
@@ -80,18 +78,34 @@ export const viewport: Viewport = {
   colorScheme: "light",
   themeColor: "#004b22",
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const orgLD = serializeLD(buildOrganizationLD());
+
   return (
     <html
       lang="en"
-      className={cn("bg-background", inter.variable, spaceGrotesk.variable, "font-sans", geist.variable)}
+      className={cn(
+        "bg-background",
+        inter.variable,
+        spaceGrotesk.variable,
+        "font-sans",
+        geist.variable
+      )}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: orgLD }}
+        />
+      </head>
       <body className="font-sans antialiased">
         <ScrollToTop />
         {children}
-        {process.env.NODE_ENV === "production" && <Analytics />}
+        <CookieBanner />
+        <AnalyticsProvider />
       </body>
     </html>
   );
