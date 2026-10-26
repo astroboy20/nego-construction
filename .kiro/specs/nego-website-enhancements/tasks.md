@@ -138,37 +138,37 @@ Key constraints to respect throughout:
     - For any consent action (accept or decline), the written cookie must have `SameSite=Lax`, `Max-Age=31536000`, `Path=/`
     - **Validates: Requirements 7.3, 7.4, 7.5**
 
-- [ ] 7. Phase 2 — Footer privacy link
+- [x] 7. Phase 2 — Footer privacy link
   - Modify `src/components/site.tsx`: add `<Link href="/privacy-policy">Privacy Policy</Link>` to the Footer's "Explore" column links
   - _Requirements: 6.5_
 
-- [ ] 8. Checkpoint — Privacy & Consent phase
+- [x] 8. Checkpoint — Privacy & Consent phase
   - Ensure all tests pass, ask the user if questions arise.
   - Confirm the banner appears on first visit, disappears after accept/decline, and does not reappear on subsequent loads
 
-- [ ] 9. Phase 3 — Supabase database setup and auth utilities
+- [x] 9. Phase 3 — Supabase database setup and auth utilities
   - Create the `knowledge_base` table SQL (including `CHECK` constraint on `category`, `updated_at` trigger) and `contact_enquiries` table SQL — document these as migration scripts in the repo (e.g. `supabase/migrations/`)
   - Apply RLS policies: `knowledge_base` — `admin_read_kb`, `admin_insert_kb`, `admin_update_kb`, `admin_delete_kb`, `public_read_published_kb`; `contact_enquiries` — `admin_read_enquiries`, `admin_update_enquiries` (no anon INSERT or SELECT)
   - Create `src/lib/auth.ts` with `signIn(email, password)`, `signOut()`, `verifySession()`, `createSession(token)` — sessions use `HttpOnly`, `Secure`, `SameSite=Lax` cookie named `nego_admin_session` containing a signed JWT (use `jose`) with 8-hour max lifetime
   - _Requirements: 8.4, 8.5, 8.7, 9, 10_
 
-- [ ] 10. Phase 3 — Proxy (auth guard middleware)
+- [x] 10. Phase 3 — Proxy (auth guard middleware)
   - Create `src/proxy.ts` exporting `proxy` function (NOT `middleware`) with `export const config = { matcher: ['/admin/:path*'] }`
   - Logic: if path is `/admin/login` → `NextResponse.next()`; otherwise read `nego_admin_session` cookie, verify JWT with `jose` using `JWT_SECRET`; if absent/invalid/expired → redirect to `/admin/login`; if valid → `NextResponse.next()`
   - _Requirements: 8.2, 8.9_
 
-  - [ ]* 10.1 Write property test for proxy — redirects unauthenticated requests
+  - [x] 10.1 Write property test for proxy — redirects unauthenticated requests
     - **Property 12: Proxy redirects all unauthenticated /admin/* requests (except login)**
     - For any `/admin/*` path that is not `/admin/login` with no `nego_admin_session` cookie, proxy must return a redirect to `/admin/login`
     - Use fast-check `fc.string()` to generate arbitrary sub-paths
     - **Validates: Requirements 8.2**
 
-  - [ ]* 10.2 Write property test for proxy — redirects invalid/expired JWT
+  - [x] 10.2 Write property test for proxy — redirects invalid/expired JWT
     - **Property 13: Proxy redirects requests with invalid or expired JWT**
     - For any `/admin/*` path (not login) with an invalid or expired JWT in `nego_admin_session`, proxy must redirect to `/admin/login`
     - **Validates: Requirements 8.9**
 
-- [ ] 11. Phase 3 — Admin layout and Server Actions
+- [x] 11. Phase 3 — Admin layout and Server Actions
   - Create `src/app/(admin)/layout.tsx` — minimal layout without `SiteShell`; provides admin shell with nav links (Knowledge Base, Enquiries, Sign out)
   - Create `src/app/(admin)/admin/actions.ts` with `'use server'` directive — all write operations call `verifySession()` first:
     - `loginAction(formData)`, `logoutAction()`
@@ -192,7 +192,7 @@ Key constraints to respect throughout:
     - For any valid submission with `first_name`, `email`, `message`, `submitEnquiry` must persist a row with all required fields including `is_read: false`
     - **Validates: Requirements 10.3**
 
-- [ ] 12. Phase 3 — Admin login page
+- [-] 12. Phase 3 — Admin login page
   - Create `src/app/(admin)/admin/login/page.tsx` — Server Component shell with a Client Component form
   - Form calls `loginAction(formData)`: on success redirects to `/admin`; on failure displays `"Invalid credentials"` error message
   - Page accessible without session (proxy allows `/admin/login` through)
