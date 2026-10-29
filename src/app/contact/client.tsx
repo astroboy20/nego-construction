@@ -8,6 +8,7 @@ import {
 } from "@/components/site";
 import { company } from "@/lib/site-data";
 import { MapboxAddressMap } from "@/lib/map";
+import { submitEnquiry } from "./actions";
 
 // ── Minimal toast ─────────────────────────────────────────────────────────────
 function Toast({ message, onClose }: { message: string; onClose: () => void }) {
@@ -42,14 +43,25 @@ const TO = "info@negoconstruction.com";
 export default function ContactClient() {
   const [toast, setToast] = useState(false);
 
-  function submit(e: FormEvent<HTMLFormElement>) {
+  async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const firstName = fd.get("firstName") as string;
     const lastName  = fd.get("lastName")  as string;
     const email     = fd.get("email")     as string;
     const phone     = fd.get("phone")     as string;
     const message   = fd.get("message")   as string;
+
+    // Persist enquiry to Supabase via Server Action.
+    // Wrapped in try/catch — failure must not prevent the mailto fallback
+    // (Requirement 10.7: fail-open, no enquiry is lost).
+    try {
+      await submitEnquiry(fd);
+    } catch (err) {
+      // Log silently; the mailto path below still runs unconditionally.
+      console.error("[ContactForm] submitEnquiry failed:", err);
+    }
 
     const subject = encodeURIComponent(
       `Enquiry from ${firstName} ${lastName} — NEGO Construction`
@@ -58,12 +70,12 @@ export default function ContactClient() {
       `Name: ${firstName} ${lastName}\nEmail: ${email}\nPhone: ${phone || "—"}\n\n${message}`
     );
 
-    // Open user's email client pre-filled
+    // Open user's email client pre-filled — unconditional (Requirement 10.7)
     window.location.href = `mailto:${TO}?subject=${subject}&body=${body}`;
 
     // Show toast after a short delay (gives mailto time to trigger)
     setTimeout(() => setToast(true), 400);
-    (e.target as HTMLFormElement).reset();
+    form.reset();
   }
 
   return (

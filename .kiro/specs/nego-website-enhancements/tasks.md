@@ -177,7 +177,7 @@ Key constraints to respect throughout:
   - Create `src/app/contact/actions.ts` with `submitEnquiry(formData)` Server Action using Supabase service role key to insert into `contact_enquiries`; catch errors and return `ActionResult`
   - _Requirements: 8.8, 9.2, 9.6, 9.7, 10.1, 10.6_
 
-  - [ ]* 11.1 Write property test for KB validation — rejects insufficient content
+  - [x] 11.1 Write property test for KB validation — rejects insufficient content
     - **Property 15: Knowledge Base validation rejects insufficient content**
     - For any `KBEntryInput` where `title` is empty/whitespace OR `content` has < 20 characters, `createKBEntry` / `updateKBEntry` must return `{ success: false }` without calling Supabase
     - **Validates: Requirements 9.6**
@@ -192,13 +192,13 @@ Key constraints to respect throughout:
     - For any valid submission with `first_name`, `email`, `message`, `submitEnquiry` must persist a row with all required fields including `is_read: false`
     - **Validates: Requirements 10.3**
 
-- [-] 12. Phase 3 — Admin login page
+- [x] 12. Phase 3 — Admin login page
   - Create `src/app/(admin)/admin/login/page.tsx` — Server Component shell with a Client Component form
   - Form calls `loginAction(formData)`: on success redirects to `/admin`; on failure displays `"Invalid credentials"` error message
   - Page accessible without session (proxy allows `/admin/login` through)
   - _Requirements: 8.1, 8.3, 8.6_
 
-- [ ] 13. Phase 3 — Admin Knowledge Base CRUD pages
+- [x] 13. Phase 3 — Admin Knowledge Base CRUD pages
   - Create `src/app/(admin)/admin/page.tsx` — redirect to `/admin/knowledge-base`
   - Create `src/app/(admin)/admin/knowledge-base/page.tsx` — lists all KB entries (title, category, published status, updated_at); calls `verifySession()` for defence-in-depth; links to new/edit/delete
   - Create `src/app/(admin)/admin/knowledge-base/new/page.tsx` — form for creating a new KB entry (title, content, category dropdown with `about|projects|services|contact|faq`, is_published toggle); calls `createKBEntry` Server Action
@@ -216,21 +216,21 @@ Key constraints to respect throughout:
     - For any set of enquiries with varying `submitted_at` timestamps, the list must be ordered most recent first
     - **Validates: Requirements 10.2**
 
-- [ ] 15. Phase 3 — Contact form Server Action wiring
+- [x] 15. Phase 3 — Contact form Server Action wiring
   - Modify `src/app/contact/client.tsx` (or `page.tsx` if not yet split): call `submitEnquiry(formData)` Server Action on form submit
   - Wrap Server Action call in try/catch — regardless of result (success or error), unconditionally trigger the `mailto:` action and show the toast
   - _Requirements: 10.1, 10.7_
 
-  - [ ]* 15.1 Write property test for contact form fail-open
+  - [x] 15.1 Write property test for contact form fail-open
     - **Property 25: Contact form fallback on Supabase failure**
     - For any scenario where `submitEnquiry` throws or returns `{ success: false }`, the client must still trigger the `mailto:` action
     - **Validates: Requirements 10.7**
 
-- [ ] 16. Checkpoint — Admin Dashboard phase
+- [x] 16. Checkpoint — Admin Dashboard phase
   - Ensure all tests pass, ask the user if questions arise.
   - Verify login redirect, session expiry redirect, KB CRUD round-trip, and enquiry mark-as-read flow
 
-- [ ] 17. Phase 4 — KB retrieval utility
+- [x] 17. Phase 4 — KB retrieval utility
   - Create `src/lib/kb-retrieval.ts` with `getPublishedKBEntries(): Promise<KBEntry[]>` — queries Supabase for all rows where `is_published = true` using the anon key (RLS allows public read on published entries)
   - _Requirements: 9.4, 9.5, 11.2_
 
@@ -244,7 +244,7 @@ Key constraints to respect throughout:
     - For any KB entry with `is_published = false`, `getPublishedKBEntries()` must NOT include it
     - **Validates: Requirements 9.5**
 
-- [ ] 18. Phase 4 — `/api/chat` Route Handler
+- [x] 18. Phase 4 — `/api/chat` Route Handler
   - Create `src/app/api/chat/route.ts` exporting `POST(request: NextRequest)`
   - Implement in order:
     1. Parse and validate body — reject if `message` is absent or > 1000 characters (HTTP 400)
@@ -273,7 +273,7 @@ Key constraints to respect throughout:
     - For any valid POST request within limits, the response must be a streaming response (check `Transfer-Encoding: chunked` or `ReadableStream`)
     - **Validates: Requirements 11.8**
 
-- [ ] 19. Phase 4 — Chatbot widget component
+- [x] 19. Phase 4 — Chatbot widget component
   - Create `src/components/chatbot-widget.tsx` as a Client Component (`"use client"`)
   - Floating action button (FAB) at `bottom-20 right-4` (above `ScrollToTop` at `bottom-6 right-4`) that opens a chat panel
   - Internal state: `isOpen`, `messages: ChatMessage[]`, `isLoading`
@@ -283,7 +283,7 @@ Key constraints to respect throughout:
   - Add `<ChatbotWidget />` to `src/app/layout.tsx`
   - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.7, 11.8, 12.4, 12.5, 13.5_
 
-- [ ] 20. Final checkpoint — All phases complete
+- [x] 20. Final checkpoint — All phases complete
   - Ensure all tests pass, ask the user if questions arise.
   - Run `next build` and confirm exit code 0 with no TypeScript errors
   - Verify all 6 project routes resolve correctly after the Server Component split

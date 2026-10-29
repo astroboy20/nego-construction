@@ -6,6 +6,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { buildOrganizationLD, serializeLD } from "@/lib/json-ld";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 import { CookieBanner } from "@/components/cookie-banner";
+import { ChatbotWidget } from "@/components/chatbot-widget";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -105,6 +106,7 @@ export default function RootLayout({
         <ScrollToTop />
         {children}
         <CookieBanner />
+        <ChatbotWidget />
         <AnalyticsProvider />
       </body>
     </html>
