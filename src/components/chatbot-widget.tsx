@@ -8,17 +8,11 @@ import type { ChatMessage } from "@/lib/types";
 const INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
 const CHECK_INTERVAL_MS = 60 * 1000; // 1 minute
 
-/**
- * ChatbotWidget renders a floating action button (FAB) that opens a chat panel.
- * The FAB sits at bottom-20 right-4 (above the ScrollToTop button at bottom-6 right-4).
- *
- * Features:
- * - Streaming responses via the /api/chat endpoint
- * - Conversation cleared on 30-minute inactivity or tab visibility change
- * - Disclaimer with link to /contact
- *
- * Requirements: 11.1, 11.2, 11.3, 11.4, 11.7, 11.8, 12.4, 12.5, 13.5
- */
+/** Generate a random session ID for this browser session */
+function generateSessionId() {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
 export function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -28,6 +22,8 @@ export function ChatbotWidget() {
   const lastActivityRef = useRef<number>(Date.now());
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  // Stable session ID for the lifetime of this widget instance
+  const sessionIdRef = useRef<string>(generateSessionId());
 
   // ─── Inactivity and visibility clearing ─────────────────────────────────────
   useEffect(() => {
@@ -91,13 +87,19 @@ export function ChatbotWidget() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({
+          message: text,
+          sessionId: sessionIdRef.current,
+          // Send previous messages (excluding the optimistic empty assistant placeholder)
+          history: messages.filter((m) => m.content.length > 0),
+        }),
       });
 
       if (!response.ok || !response.body) {
-        const errorText = response.status === 429
-          ? "Too many requests. Please wait a moment before trying again."
-          : "Sorry, something went wrong. Please try again.";
+        const errorText =
+          response.status === 429
+            ? "Too many requests. Please wait a moment before trying again."
+            : "Sorry, something went wrong. Please try again.";
         setMessages((prev) => {
           const updated = [...prev];
           updated[updated.length - 1] = {

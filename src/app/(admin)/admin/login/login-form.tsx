@@ -1,14 +1,10 @@
 'use client'
 
-import { useId, useState, type FormEvent } from 'react'
-import { useRouter } from 'next/navigation'
-
-// TODO: point this at your real login endpoint / replace with your server action.
-const LOGIN_ENDPOINT = '/api/admin/login'
-const REDIRECT_TO = '/admin'
+import { useId, useState } from 'react'
+import { isRedirectError } from 'next/dist/client/components/redirect-error'
+import { loginAction } from '@/app/(admin)/admin/actions'
 
 export default function LoginForm() {
-  const router = useRouter()
   const emailId = useId()
   const passwordId = useId()
   const errorId = useId()
@@ -17,33 +13,23 @@ export default function LoginForm() {
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setError(null)
     setPending(true)
 
-    const data = new FormData(e.currentTarget)
+    const formData = new FormData(e.currentTarget)
 
     try {
-      const res = await fetch(LOGIN_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: data.get('email'),
-          password: data.get('password'),
-        }),
-      })
-
-      if (!res.ok) {
-        const body = await res.json().catch(() => null)
-        setError(body?.error ?? 'Incorrect email or password. Check your details and try again.')
+      const result = await loginAction(formData)
+      if (result && !result.success) {
+        setError(result.error ?? 'Incorrect email or password. Check your details and try again.')
         setPending(false)
-        return
       }
-
-      router.replace(REDIRECT_TO)
-      router.refresh()
-    } catch {
+      // On success, loginAction calls redirect('/admin') — no client-side nav needed
+    } catch (err) {
+      // Next.js redirect() throws a special error — re-throw it so the router handles it
+      if (isRedirectError(err)) throw err
       setError('Could not reach the server. Check your connection and try again.')
       setPending(false)
     }

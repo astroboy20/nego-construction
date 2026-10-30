@@ -16,8 +16,8 @@
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { signIn, signOut, createSession, verifySession } from '@/lib/auth'
-import { createServerClient, createServiceClient } from '@/lib/supabase/server'
-import type { ActionResult, KBEntryInput } from '@/lib/types'
+import { createServiceClient } from '@/lib/supabase/server'
+import type { ActionResult, KBEntryInput, FeatureRequestPriority, FeatureRequestStatus } from '@/lib/types'
 
 // ─── Auth Actions ─────────────────────────────────────────────────────────────
 
@@ -233,5 +233,87 @@ export async function markEnquiryRead(id: string): Promise<ActionResult> {
 
   revalidatePath('/admin/enquiries')
   revalidatePath(`/admin/enquiries/${id}`)
+  return { success: true }
+}
+
+// ─── Feature Request Actions ──────────────────────────────────────────────────
+
+/**
+ * Submit a new feature request (public — no session required).
+ */
+export async function submitFeatureRequest(data: {
+  name: string
+  email: string
+  title: string
+  description: string
+  priority: FeatureRequestPriority
+}): Promise<ActionResult> {
+  if (!data.name?.trim() || !data.email?.trim() || !data.title?.trim() || !data.description?.trim()) {
+    return { success: false, error: 'All fields are required.' }
+  }
+
+  const supabase = createServiceClient()
+  const { error } = await supabase.from('feature_requests').insert({
+    name: data.name.trim(),
+    email: data.email.trim(),
+    title: data.title.trim(),
+    description: data.description.trim(),
+    priority: data.priority,
+  })
+
+  if (error) {
+    console.error('[submitFeatureRequest]', error)
+    return { success: false, error: 'Failed to submit. Please try again.' }
+  }
+
+  return { success: true }
+}
+
+/**
+ * Update the status of a feature request.
+ * Requires an active session.
+ */
+export async function updateFeatureRequestStatus(
+  id: string,
+  status: FeatureRequestStatus,
+): Promise<ActionResult> {
+  const session = await verifySession()
+  if (!session) return { success: false, error: 'Unauthorised.' }
+
+  const supabase = createServiceClient()
+  const { error } = await supabase
+    .from('feature_requests')
+    .update({ status })
+    .eq('id', id)
+
+  if (error) {
+    console.error('[updateFeatureRequestStatus]', error)
+    return { success: false, error: 'Failed to update status.' }
+  }
+
+  revalidatePath('/admin/feature-requests')
+  return { success: true }
+}
+
+/**
+ * Mark a feature request as read.
+ * Requires an active session.
+ */
+export async function markFeatureRequestRead(id: string): Promise<ActionResult> {
+  const session = await verifySession()
+  if (!session) return { success: false, error: 'Unauthorised.' }
+
+  const supabase = createServiceClient()
+  const { error } = await supabase
+    .from('feature_requests')
+    .update({ is_read: true })
+    .eq('id', id)
+
+  if (error) {
+    console.error('[markFeatureRequestRead]', error)
+    return { success: false, error: 'Failed to mark as read.' }
+  }
+
+  revalidatePath('/admin/feature-requests')
   return { success: true }
 }

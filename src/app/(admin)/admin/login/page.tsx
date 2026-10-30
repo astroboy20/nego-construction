@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   return (
     <main className="grid min-h-screen grid-cols-1 bg-white lg:grid-cols-2">
-      {/* Brand panel: full on desktop, compact banner on mobile/tablet */}
-      <section className="relative flex flex-col justify-between overflow-hidden bg-[#033a21] px-6 py-6 text-white sm:px-10 sm:py-8 lg:min-h-screen lg:px-14 lg:py-12">
+      {/* Brand panel: hidden on mobile/tablet, full panel on desktop */}
+      <section className="relative hidden lg:flex flex-col justify-between overflow-hidden bg-[#033a21] px-6 py-6 text-white sm:px-10 sm:py-8 lg:min-h-screen lg:px-14 lg:py-12">
         {/* soft decorative rings */}
         <div
           aria-hidden

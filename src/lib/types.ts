@@ -53,3 +53,31 @@ export interface ChatMessage {
   role: 'user' | 'assistant'
   content: string
 }
+
+/** A saved chatbot session stored in the chat_sessions table */
+export interface ChatSession {
+  id: string
+  session_id: string
+  messages: ChatMessage[]
+  ip_address: string | null
+  user_agent: string | null
+  started_at: string
+  last_message_at: string
+  message_count: number
+}
+
+export type FeatureRequestPriority = 'low' | 'medium' | 'high'
+export type FeatureRequestStatus = 'open' | 'in_progress' | 'completed' | 'declined'
+
+/** A feature request submitted by a user */
+export interface FeatureRequest {
+  id: string
+  name: string
+  email: string
+  title: string
+  description: string
+  priority: FeatureRequestPriority
+  status: FeatureRequestStatus
+  submitted_at: string
+  is_read: boolean
+}
