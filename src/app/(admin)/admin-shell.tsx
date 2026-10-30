@@ -33,17 +33,18 @@ export default function AdminShell({
   }
 
   return (
-    <div className="flex min-h-screen bg-neutral-50">
-      {/* Desktop sidebar — hidden on mobile */}
+    <div className="flex h-screen overflow-hidden bg-neutral-50">
+      {/* Desktop sidebar — fixed height, never scrolls */}
       <div className="hidden lg:flex lg:flex-shrink-0">
         <AdminSidebar onSignOut={handleSignOut} />
       </div>
 
-      {/* Mobile header — shown on mobile only */}
-      <AdminMobileHeader onSignOut={handleSignOut} />
-
-      {/* Main content area */}
+      {/* Right side: mobile header + scrollable content */}
       <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Mobile header — shown on mobile only, fixed at top */}
+        <AdminMobileHeader onSignOut={handleSignOut} />
+
+        {/* Scrollable main content area */}
         <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
           <div className="mx-auto max-w-5xl">
             {children}

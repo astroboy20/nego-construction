@@ -63,29 +63,56 @@ function StatCard({ label, value, sub, icon: Icon, accent, iconBg }: StatCardPro
 
 // ─── Mini bar chart (CSS-only) ───────────────────────────────────────────────
 
-function MiniBarChart({ data }: { data: Array<{ date: string; views: number }> }) {
-  if (data.length === 0) {
+function MiniBarChart({
+  data,
+  available,
+}: {
+  data: Array<{ date: string; views: number; visitors: number }>
+  available: boolean
+}) {
+  const hasData = data.some((d) => d.views > 0)
+
+  if (data.length === 0 || !hasData) {
     return (
-      <div className="flex h-20 items-end gap-px">
-        {Array.from({ length: 30 }).map((_, i) => (
-          <div key={i} className="h-1 flex-1 rounded-sm bg-neutral-100" />
-        ))}
+      <div className="space-y-3">
+        <div className="flex h-20 items-end gap-px">
+          {Array.from({ length: 30 }).map((_, i) => (
+            <div key={i} className="h-1 flex-1 rounded-sm bg-neutral-100" />
+          ))}
+        </div>
+        {available ? (
+          <p className="text-center text-xs text-neutral-400">
+            No traffic recorded in the last 30 days yet.
+          </p>
+        ) : (
+          <p className="text-center text-xs text-neutral-400">
+            Add your Vercel API credentials to see live traffic data.
+          </p>
+        )}
       </div>
     )
   }
 
-  const max = Math.max(...data.map((d) => d.views), 1)
+  const maxViews = Math.max(...data.map((d) => d.views), 1)
 
   return (
-    <div className="flex h-20 items-end gap-px" role="img" aria-label="Page views over last 30 days">
+    <div
+      className="flex h-20 items-end gap-px"
+      role="img"
+      aria-label="Page views over last 30 days"
+    >
       {data.map((d, i) => {
-        const pct = Math.max((d.views / max) * 100, 2)
+        const pct = Math.max((d.views / maxViews) * 100, 2)
+        const label = `${new Date(d.date).toLocaleDateString('en-GB', {
+          day: 'numeric',
+          month: 'short',
+        })}: ${d.views} view${d.views !== 1 ? 's' : ''}, ${d.visitors} visitor${d.visitors !== 1 ? 's' : ''}`
         return (
           <div
             key={i}
-            title={`${new Date(d.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}: ${d.views} views`}
+            title={label}
             style={{ height: `${pct}%` }}
-            className="flex-1 rounded-t-sm bg-[#033a21] opacity-70 transition-opacity hover:opacity-100"
+            className="group relative flex-1 cursor-default rounded-t-sm bg-[#033a21] opacity-60 transition-opacity hover:opacity-100"
           />
         )
       })}
@@ -195,7 +222,7 @@ export default async function AnalyticsPage() {
           {vercel.available && (
             <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Live · Vercel Analytics
+              Live 
             </span>
           )}
           {!vercel.available && (
@@ -236,12 +263,7 @@ export default async function AnalyticsPage() {
               </p>
             )}
           </div>
-          <MiniBarChart data={vercel.pageViewsByDay} />
-          {!vercel.available && (
-            <p className="mt-3 text-center text-xs text-neutral-400">
-              Add your Vercel API credentials to see live traffic data.
-            </p>
-          )}
+          <MiniBarChart data={vercel.pageViewsByDay} available={vercel.available} />
         </div>
 
         {/* Top pages + countries */}
