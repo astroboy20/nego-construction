@@ -81,24 +81,13 @@ async function saveChatSession(
       .single()
 
     if (existing) {
-      // Merge new messages into existing session
-      const merged: ChatMessage[] = existing.messages as ChatMessage[]
-      const lastExisting = merged[merged.length - 1]
-      for (const msg of messages) {
-        // Avoid adding duplicates by checking the last stored message
-        if (
-          !lastExisting ||
-          msg.role !== lastExisting.role ||
-          msg.content !== lastExisting.content
-        ) {
-          merged.push(msg)
-        }
-      }
+      // Replace with the full conversation — the client always sends the
+      // complete history, so `messages` is already the canonical record.
       await supabase
         .from('chat_sessions')
         .update({
-          messages: merged,
-          message_count: merged.length,
+          messages,
+          message_count: messages.length,
           last_message_at: new Date().toISOString(),
         })
         .eq('id', existing.id)
