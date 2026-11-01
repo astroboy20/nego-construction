@@ -44,6 +44,7 @@ export async function signIn(email: string, password: string): Promise<SessionPa
   const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
   if (error || !data.session || !data.user) {
+    console.error('[signIn] Supabase auth error:', error?.message ?? 'no session/user returned')
     throw new Error('Invalid credentials')
   }
 

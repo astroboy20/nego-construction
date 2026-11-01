@@ -35,7 +35,9 @@ export async function loginAction(
   try {
     const payload = await signIn(email.trim(), password)
     await createSession(payload)
-  } catch {
+  } catch (err) {
+    // Log the real error server-side so it appears in Vercel function logs
+    console.error('[loginAction] signIn failed:', err)
     // Return a non-specific error message regardless of failure reason (Req 8.6)
     return { success: false, error: 'Invalid credentials' }
   }
