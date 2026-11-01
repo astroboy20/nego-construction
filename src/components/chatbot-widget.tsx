@@ -5,19 +5,135 @@ import Link from "next/link";
 import { X, ArrowUp, MessageCircle, RotateCcw, HardHat } from "lucide-react";
 import type { ChatMessage } from "@/lib/types";
 
-const INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
-const CHECK_INTERVAL_MS = 60 * 1000; // 1 minute
+const INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000;
+const CHECK_INTERVAL_MS = 60 * 1000;
 
-// Edit these to match the questions your visitors actually ask.
 const SUGGESTED_PROMPTS = [
   "What services do you offer?",
   "How do I request a quote?",
   "Where do you work?",
 ];
 
-/** Generate a random session ID for this browser session */
 function generateSessionId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+// ─── Lightweight markdown → React nodes ────────────────────────────────────
+/**
+ * Converts a subset of markdown to JSX without any extra dependency.
+ * Handles: **bold**, *italic*, numbered lists (1. 2.), bullet lists (- *),
+ * blank-line-separated paragraphs, and inline bold-label patterns like
+ * "**Title**: description".
+ */
+function renderMarkdown(text: string): React.ReactNode {
+  // Normalise Windows line endings, then split into blocks on blank lines
+  const blocks = text.trim().replace(/\r\n/g, '\n').split(/\n{2,}/)
+
+  return blocks.map((block, bi) => {
+    const lines = block.split('\n').filter(l => l.trim() !== '')
+    if (lines.length === 0) return null
+
+    // Detect list blocks: every non-empty line starts with a number or bullet
+    const isNumbered = lines.every(l => /^\d+[\.\)]\s/.test(l.trim()))
+    const isBullet   = lines.every(l => /^[-*•]\s/.test(l.trim()))
+
+    if (isNumbered) {
+      return (
+        <ol key={bi} className="my-1 ml-4 list-decimal space-y-1 text-sm">
+          {lines.map((l, li) => (
+            <li key={li}>{inlineFormat(l.replace(/^\d+[\.\)]\s+/, ''))}</li>
+          ))}
+        </ol>
+      )
+    }
+
+    if (isBullet) {
+      return (
+        <ul key={bi} className="my-1 ml-4 list-disc space-y-1 text-sm">
+          {lines.map((l, li) => (
+            <li key={li}>{inlineFormat(l.replace(/^[-*•]\s+/, ''))}</li>
+          ))}
+        </ul>
+      )
+    }
+
+    // Mixed block — render line by line
+    if (lines.length > 1) {
+      return (
+        <div key={bi} className="space-y-1">
+          {lines.map((l, li) => renderLine(l, li))}
+        </div>
+      )
+    }
+
+    // Single line
+    return renderLine(lines[0], bi)
+  })
+}
+
+function renderLine(line: string, key: number | string): React.ReactNode {
+  const t = line.trim()
+  if (!t) return null
+
+  if (/^\d+[\.\)]\s/.test(t)) {
+    return (
+      <p key={key} className="text-sm">
+        <span className="mr-1.5 font-semibold tabular-nums">
+          {t.match(/^(\d+[\.\)])/)?.[1]}
+        </span>
+        {inlineFormat(t.replace(/^\d+[\.\)]\s+/, ''))}
+      </p>
+    )
+  }
+
+  if (/^[-*•]\s/.test(t)) {
+    return (
+      <p key={key} className="flex gap-2 text-sm">
+        <span aria-hidden className="mt-[0.45em] h-1 w-1 shrink-0 rounded-full bg-current opacity-50" />
+        <span>{inlineFormat(t.replace(/^[-*•]\s+/, ''))}</span>
+      </p>
+    )
+  }
+
+  return (
+    <p key={key} className="text-sm leading-relaxed">
+      {inlineFormat(t)}
+    </p>
+  )
+}
+
+/**
+ * Converts inline markdown (**bold**, *italic*) to React elements.
+ * Also turns /path-style internal links into bold clickable Next.js Links.
+ */
+function inlineFormat(text: string): React.ReactNode {
+  // Split on **bold**, *italic*, and /internal-links
+  const parts = text.split(/(\*\*[^*]+?\*\*|\*[^*]+?\*|\/[\w\-/]+)/g)
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={i} className="font-semibold">{part.slice(2, -2)}</strong>
+    }
+    if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
+      return <em key={i}>{part.slice(1, -1)}</em>
+    }
+    if (/^\/[\w\-/]+$/.test(part)) {
+      return (
+        <Link
+          key={i}
+          href={part}
+          onClick={() => {
+            // Close the chat panel when the user navigates
+            const closeBtn = document.querySelector<HTMLButtonElement>('[aria-label="Close chat"]')
+            closeBtn?.click()
+          }}
+          className="font-semibold text-accent underline underline-offset-2 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        >
+          {part}
+        </Link>
+      )
+    }
+    return part || null
+  })
 }
 
 export function ChatbotWidget() {
@@ -313,7 +429,7 @@ export function ChatbotWidget() {
                       </div>
                     )}
                     <div
-                      className={`max-w-[80%] whitespace-pre-wrap break-words px-3.5 py-2 text-sm leading-relaxed ${
+                      className={`max-w-[80%] break-words px-3.5 py-2 text-sm leading-relaxed ${
                         isUser
                           ? "rounded-2xl rounded-br-sm bg-accent text-accent-foreground"
                           : "rounded-2xl rounded-bl-sm border border-border bg-background text-foreground"
@@ -333,8 +449,12 @@ export function ChatbotWidget() {
                             />
                           ))}
                         </span>
-                      ) : (
+                      ) : isUser ? (
                         msg.content
+                      ) : (
+                        <div className="space-y-1.5">
+                          {renderMarkdown(msg.content)}
+                        </div>
                       )}
                     </div>
                   </div>
