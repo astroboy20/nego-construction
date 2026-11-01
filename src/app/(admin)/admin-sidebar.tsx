@@ -59,6 +59,7 @@ export default function AdminSidebar({
             priority
           />
         </Link>
+        <div className='text-white font-bold p-2'>NEGO</div>
       </div>
 
       {/* Section label */}

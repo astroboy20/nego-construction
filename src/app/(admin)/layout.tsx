@@ -1,8 +1,3 @@
-/**
- * Admin dashboard layout — isolated from the public site shell.
- * Uses a sidebar layout with NEGO logo, nav links, and sign out button.
- * Inherits the same fonts as the public site (Space Grotesk + Inter).
- */
 
 import type { Metadata } from 'next'
 import { cn } from '@/lib/utils'

@@ -50,14 +50,14 @@ function FeatureRequestRow({ request }: { request: FeatureRequest }) {
 
   function handleStatusChange(newStatus: FeatureRequestStatus) {
     setStatus(newStatus)
-    startTransition(() => updateFeatureRequestStatus(request.id, newStatus))
+    startTransition(() => { void updateFeatureRequestStatus(request.id, newStatus) })
   }
 
   function handleExpand() {
     setExpanded((v) => !v)
     if (!isRead) {
       setIsRead(true)
-      startTransition(() => markFeatureRequestRead(request.id))
+      startTransition(() => { void markFeatureRequestRead(request.id) })
     }
   }
 

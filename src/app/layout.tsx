@@ -6,8 +6,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { buildOrganizationLD, serializeLD } from "@/lib/json-ld";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 import { CookieBanner } from "@/components/cookie-banner";
-import { ChatbotWidget } from "@/components/chatbot-widget";
-import { Analytics } from "@vercel/analytics/next"
+import { ChatbotGuard } from "@/components/chatbot-guard";
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const inter = Inter({
@@ -106,7 +105,7 @@ export default function RootLayout({
         <ScrollToTop />
         {children}
         <CookieBanner />
-        <ChatbotWidget />
+        <ChatbotGuard />
         <AnalyticsProvider />
       </body>
     </html>

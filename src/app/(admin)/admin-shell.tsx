@@ -7,10 +7,7 @@ import AdminMobileHeader from './admin-mobile-header'
 
 const BARE_ROUTES = ['/admin/login']
 
-/**
- * Admin shell — renders the sidebar + mobile header for all admin pages
- * except bare routes (login page), which own the full viewport.
- */
+
 export default function AdminShell({
   onSignOut,
   children,
