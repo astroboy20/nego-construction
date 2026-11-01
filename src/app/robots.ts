@@ -2,11 +2,13 @@ import type { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/admin', '/admin/'],
-    },
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/feature-request/'],
+      },
+    ],
     sitemap: 'https://www.negoconstruction.com/sitemap.xml',
   }
 }

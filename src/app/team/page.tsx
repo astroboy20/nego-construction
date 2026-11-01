@@ -1,8 +1,38 @@
+import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { CtaBand, PageHero, Reveal, SiteShell } from "@/components/site";
 import { team } from "@/lib/site-data";
+
+export const metadata: Metadata = {
+  title: "Our Team",
+  description:
+    "Meet the management and delivery team behind NEGO Construction — over 25 years of combined expertise in civil engineering, project management and construction delivery.",
+  alternates: {
+    canonical: "https://www.negoconstruction.com/team",
+  },
+  openGraph: {
+    title: "Our Team | NEGO Construction",
+    description:
+      "The people who make NEGO Construction's delivery record possible — engineers, project managers and construction professionals with 25+ years of experience.",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "NEGO Construction team",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Our Team | NEGO Construction",
+    description:
+      "The people who make NEGO Construction's delivery record possible — engineers, project managers and construction professionals with 25+ years of experience.",
+    images: ["/opengraph-image"],
+  },
+};
 
 export default function TeamPage() {
   return (

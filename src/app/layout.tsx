@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ScrollToTop } from "@/components/scroll-to-top";
-import { buildOrganizationLD, serializeLD } from "@/lib/json-ld";
+import { buildOrganizationLD, buildLocalBusinessLD, serializeLD } from "@/lib/json-ld";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 import { CookieBanner } from "@/components/cookie-banner";
 import { ChatbotGuard } from "@/components/chatbot-guard";
@@ -40,6 +40,9 @@ export const metadata: Metadata = {
   authors: [{ name: "NEGO Construction Limited" }],
   creator: "NEGO Construction Limited",
   metadataBase: new URL("https://www.negoconstruction.com"),
+  alternates: {
+    canonical: "https://www.negoconstruction.com",
+  },
   openGraph: {
     type: "website",
     locale: "en_NG",
@@ -50,7 +53,7 @@ export const metadata: Metadata = {
       "NEGO Construction delivers infrastructure, residential and commercial projects across Nigeria with clarity, care and craft.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "NEGO Construction Limited",
@@ -59,10 +62,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@negoconstruction",
     title: "NEGO Construction Limited",
     description:
       "NEGO Construction delivers infrastructure, residential and commercial projects across Nigeria with clarity, care and craft.",
-    images: ["/og-image.png"],
+    images: ["/opengraph-image"],
   },
   icons: {
     icon: [
@@ -83,6 +87,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const orgLD = serializeLD(buildOrganizationLD());
+  const localBizLD = serializeLD(buildLocalBusinessLD());
 
   return (
     <html
@@ -99,6 +104,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: orgLD }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: localBizLD }}
         />
       </head>
       <body className="font-sans antialiased">

@@ -1,7 +1,37 @@
+import type { Metadata } from 'next'
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
 import { CtaBand, PageHero, SectionHeading, SiteShell } from '@/components/site'
 import { services } from '@/lib/site-data'
+
+export const metadata: Metadata = {
+  title: 'Our Services',
+  description:
+    'NEGO Construction delivers engineering construction, infrastructure and road works, procurement, and full project management — across Nigeria.',
+  alternates: {
+    canonical: 'https://www.negoconstruction.com/services',
+  },
+  openGraph: {
+    title: 'Services | NEGO Construction',
+    description:
+      'Engineering construction, infrastructure, procurement and project management — one experienced team from first brief to final handover.',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'NEGO Construction services',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Services | NEGO Construction',
+    description:
+      'Engineering construction, infrastructure, procurement and project management — one experienced team from first brief to final handover.',
+    images: ['/opengraph-image'],
+  },
+}
 
 const process = ['Understand the brief, constraints and success criteria', 'Develop a practical delivery approach and programme', 'Coordinate people, procurement, quality and safety', 'Deliver, review and support long-term value']
 

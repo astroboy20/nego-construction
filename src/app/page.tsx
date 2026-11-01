@@ -14,19 +14,22 @@ import {
   VideoPrompt,
 } from "@/components/site";
 import { projects, services } from "@/lib/site-data";
-import { buildWebSiteLD, serializeLD } from "@/lib/json-ld";
+import { buildWebSiteLD, buildFAQLD, serializeLD } from "@/lib/json-ld";
 
 export const metadata: Metadata = {
   title: "NEGO Construction Limited — Infrastructure, Residential & Commercial Projects in Nigeria",
   description:
     "NEGO Construction partners with ambitious clients to deliver infrastructure, residential and commercial projects across Nigeria with clarity, care and craft.",
+  alternates: {
+    canonical: "https://www.negoconstruction.com",
+  },
   openGraph: {
     title: "NEGO Construction Limited",
     description:
       "Infrastructure, residential and commercial projects across Nigeria — built with clarity, care and craft.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "NEGO Construction Limited",
@@ -38,17 +41,43 @@ export const metadata: Metadata = {
     title: "NEGO Construction Limited",
     description:
       "Infrastructure, residential and commercial projects across Nigeria — built with clarity, care and craft.",
-    images: ["/og-image.png"],
+    images: ["/opengraph-image"],
   },
 };
 
 export default function Page() {
   const websiteLD = serializeLD(buildWebSiteLD());
+  const faqLD = serializeLD(buildFAQLD([
+    {
+      question: "What type of construction projects does NEGO Construction handle?",
+      answer: "NEGO Construction handles infrastructure and road works, residential developments, commercial buildings, healthcare facilities, educational buildings, agricultural facilities, and government projects across Nigeria."
+    },
+    {
+      question: "Where is NEGO Construction based?",
+      answer: "NEGO Construction Limited is headquartered at 2, Gbolahun Lawal Street, Off Ashabi Cole, Lateef Jakande Road, CBD Ikeja, Lagos, Nigeria."
+    },
+    {
+      question: "How long has NEGO Construction been operating?",
+      answer: "NEGO Construction has been operating for over 25 years, delivering construction and engineering projects across Nigeria since the late 1990s."
+    },
+    {
+      question: "How can I contact NEGO Construction?",
+      answer: "You can reach NEGO Construction by phone on 0805 523 5816 or 0807 415 1014, or by email at info@negoconstruction.com. You can also submit an enquiry via the contact form at negoconstruction.com/contact."
+    },
+    {
+      question: "What is Lily Park by NEGO Construction?",
+      answer: "Lily Park is a residential estate developed and constructed by NEGO Construction Limited in Abijo GRA, Lagos, in a joint venture with LSDPC. It is located less than 20 minutes from Victoria Island and focuses on wellness, peace, and community living."
+    },
+  ]));
   return (
     <SiteShell>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: websiteLD }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: faqLD }}
       />
       <VideoPrompt />
       <main>

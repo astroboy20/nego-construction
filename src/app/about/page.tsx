@@ -20,13 +20,16 @@ export const metadata: Metadata = {
   title: "About NEGO Construction",
   description:
     "NEGO Construction is an indigenous construction and engineering company — trusted for over 25 years to deliver infrastructure, residential and commercial projects across Nigeria.",
+  alternates: {
+    canonical: "https://www.negoconstruction.com/about",
+  },
   openGraph: {
     title: "About NEGO Construction",
     description:
       "Over 25 years of engineering expertise, quality commitment, and social responsibility — delivering projects that improve lives across Nigeria.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "NEGO Construction Limited — About",
@@ -38,7 +41,7 @@ export const metadata: Metadata = {
     title: "About NEGO Construction",
     description:
       "Over 25 years of engineering expertise, quality commitment, and social responsibility — delivering projects that improve lives across Nigeria.",
-    images: ["/og-image.png"],
+    images: ["/opengraph-image"],
   },
 };
 
