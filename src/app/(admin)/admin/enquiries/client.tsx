@@ -40,7 +40,7 @@ function ContactEnquiryRow({ enquiry }: { enquiry: ContactEnquiry }) {
   function handleMarkRead() {
     if (isRead) return
     setIsRead(true)
-    startTransition(() => markEnquiryRead(enquiry.id))
+    startTransition(() => { markEnquiryRead(enquiry.id) })
   }
 
   return (
@@ -54,7 +54,6 @@ function ContactEnquiryRow({ enquiry }: { enquiry: ContactEnquiry }) {
         className="flex w-full items-start gap-4 px-5 py-4 text-left"
         onClick={() => {
           setExpanded((v) => !v)
-          if (!isRead) handleMarkRead()
         }}
         aria-expanded={expanded}
       >
@@ -124,16 +123,19 @@ function ContactEnquiryRow({ enquiry }: { enquiry: ContactEnquiry }) {
               <Mail className="h-3.5 w-3.5" />
               Reply by email
             </a>
-            {!isRead && (
-              <button
-                type="button"
-                onClick={handleMarkRead}
-                className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-400 hover:text-neutral-600"
-              >
-                <CheckCircle className="h-3.5 w-3.5" />
-                Mark as read
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={handleMarkRead}
+              disabled={isRead}
+              className={`inline-flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-xs font-semibold transition-colors ${
+                isRead
+                  ? 'border-neutral-100 bg-neutral-50 text-neutral-300 cursor-default'
+                  : 'border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
+              }`}
+            >
+              <CheckCircle className="h-3.5 w-3.5" />
+              {isRead ? 'Marked as read' : 'Mark as read'}
+            </button>
           </div>
         </div>
       )}
@@ -259,16 +261,16 @@ export default function EnquiriesClient({
         <button
           type="button"
           onClick={() => setActiveTab('contacts')}
-          className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all ${
+          className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl px-2 py-2.5 text-[12px] sm:px-4 sm:text-[13px] font-semibold transition-all ${
             activeTab === 'contacts'
               ? 'bg-white text-neutral-900 shadow-sm'
               : 'text-neutral-400 hover:text-neutral-600'
           }`}
         >
-          <Mail className="h-3.5 w-3.5" aria-hidden />
-          Contact Enquiries
+          <Mail className="h-3.5 w-3.5 flex-shrink-0" aria-hidden />
+          <span className="truncate">Contact Enquiries</span>
           {unreadCount > 0 && (
-            <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-bold text-blue-700">
+            <span className="flex-shrink-0 rounded-full bg-blue-100 px-1.5 py-0.5 text-[10px] font-bold text-blue-700">
               {unreadCount}
             </span>
           )}
@@ -276,15 +278,15 @@ export default function EnquiriesClient({
         <button
           type="button"
           onClick={() => setActiveTab('chats')}
-          className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-all ${
+          className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl px-2 py-2.5 text-[12px] sm:px-4 sm:text-[13px] font-semibold transition-all ${
             activeTab === 'chats'
               ? 'bg-white text-neutral-900 shadow-sm'
               : 'text-neutral-400 hover:text-neutral-600'
           }`}
         >
-          <MessageSquare className="h-3.5 w-3.5" aria-hidden />
-          Chat Sessions
-          <span className="rounded-full bg-purple-100 px-2 py-0.5 text-[10px] font-medium text-purple-700">
+          <MessageSquare className="h-3.5 w-3.5 flex-shrink-0" aria-hidden />
+          <span className="truncate">Chat Sessions</span>
+          <span className="flex-shrink-0 rounded-full bg-purple-100 px-1.5 py-0.5 text-[10px] font-medium text-purple-700">
             {chatSessions.length}
           </span>
         </button>
